@@ -1,12 +1,15 @@
+import {Master} from './Master.js';
+
 export class Dragbar{
-	constructor(id, extraClasses){
+	constructor(master, id, extraClasses){
+		this.master = master;
 		if(id=="" || id == null){
-			id = "dragbar" + numeranda.ui.getDragbarCounter();
+			id = "dragbar" + this.master.getDragbarCounter();
 		}
 		this.id = id;
-		this.dragbar = numeranda.ui.createDiv(id, extraClasses);
-		numeranda.ui.dragbarCounterPlusPlus();
-		numeranda.ui.pushDragbar(this);
+		this.dragbar = this.master.createDiv(id, extraClasses);
+		this.master.dragbarCounterPlusPlus();
+		this.master.pushDragbar(this);
 		this.isLocked = false;
 	}
 

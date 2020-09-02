@@ -7,7 +7,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
     <link rel="stylesheet" href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" />
-    <link rel="stylesheet" type="text/css" href="chartist-js/chartist.min.css" />
 
     <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -23,24 +22,24 @@
     </div>
 
     <script type="module">
-      import * as ui from './ui/main.js';
+      import * as ui from './ui/Master.js';
       window.numeranda = {};
       window.numeranda.ui = ui;
       //ui.init();
 
-      ui.setContainerByID("containerMain");
-      //ui.setContainer();
 
-      var w1 = new ui.Window("editor")
+      var master = new ui.Master("containerMain");
 
-      var w2 = new ui.Window("plot")
+      var w1 = new ui.Window(master, "editor")
 
-      var w3 = new ui.Window("console")
+      var w2 = new ui.Window(master, "plot")
 
-      var d1 = new ui.VerticalDragbar();
+      var w3 = new ui.Window(master, "console")
+
+      var d1 = new ui.VerticalDragbar(master);
       d1.setPosition(40);
 
-      var d2 = new ui.HorizontalDragbar();
+      var d2 = new ui.HorizontalDragbar(master);
       d2.setPosition(20);
 
       d1.addLeftWindow(w1);
@@ -51,14 +50,14 @@
       d2.addBottomWindow(w3)
 
       //var wBorder = new ui.Window();
-      var dBorder1 = new ui.VerticalDragbar();
+      var dBorder1 = new ui.VerticalDragbar(master);
       dBorder1.setPosition(100);
       dBorder1.addLeftWindow(w2);
       dBorder1.addLeftWindow(w3);
       dBorder1.lock();
       //dBorder.addRightWindow(wBorder);
 
-      var dBorder2 = new ui.HorizontalDragbar();
+      var dBorder2 = new ui.HorizontalDragbar(master);
       dBorder2.setPosition(100);
       dBorder2.addTopWindow(w3);
 
@@ -66,7 +65,7 @@
 
 
 
-      ui.makeLayout();
+      master.makeLayout();
 
 
     </script>

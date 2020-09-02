@@ -1,29 +1,29 @@
 import {Dragbar} from './Dragbar.js';
 import {Window} from './Window.js';
+import {Master} from './Master.js';
 
 
 export class HorizontalDragbar extends Dragbar{
-	constructor(id, extraClasses){
+	constructor(master, id, extraClasses){
 		if(extraClasses == "" || extraClasses == null)
 			extraClasses = "standardHorizontalDragbar";
-		super(id, extraClasses);
+		super(master, id, extraClasses);
 		this.topWindow = new Set();
 		this.bottomWindow = new Set();
 		this.makeDraggable();
 		this.makeDoubleClickable();
-
 	}
 
 	addTopWindow(div){
 		this.topWindow.add(div);
-		div.setHeight(numeranda.ui.getPosition(this.dragbar).top);
+		div.setHeight(this.master.getPosition(this.dragbar).top);
 		div.setBottomDragbar(this);
 		
 	}
 
 	addBottomWindow(div){
 		this.bottomWindow.add(div);
-		div.setTop(numeranda.ui.getPosition(this.dragbar).top);
+		div.setTop(this.master.getPosition(this.dragbar).top);
 		div.setTopDragbar(this);
 	}
 
@@ -50,25 +50,25 @@ export class HorizontalDragbar extends Dragbar{
 		var s = new Set([...this.topWindow, ...this.bottomWindow])
 		var a = Array.from(s);
 
-		var rightMax = numeranda.ui.getPositionPx(a[0].window).right;
+		var rightMax = Master.getPositionPx(a[0].window).right;
 		for (var i=1; i<a.length; i++){
-  			if(rightMax < numeranda.ui.getPositionPx(a[i].window).right)
-  				rightMax = numeranda.ui.getPositionPx(a[i].window).right;
+  			if(rightMax < Master.getPositionPx(a[i].window).right)
+  				rightMax = Master.getPositionPx(a[i].window).right;
 		};
 		
-		this.dragbar.style.width = (rightMax - numeranda.ui.getPositionPx(this.dragbar).left) + "px";
+		this.dragbar.style.width = (rightMax - Master.getPositionPx(this.dragbar).left) + "px";
 
-		var leftMin = numeranda.ui.getPositionPx(a[0].window).left;
+		var leftMin = Master.getPositionPx(a[0].window).left;
 		for (var i=1; i<a.length; i++){
-  			if(leftMin > numeranda.ui.getPositionPx(a[i].window).left)
-  				leftMin = numeranda.ui.getPositionPx(a[i].window).left;
+  			if(leftMin > Master.getPositionPx(a[i].window).left)
+  				leftMin = Master.getPositionPx(a[i].window).left;
 		};
 
 		this.dragbar.style.left = leftMin + "px";
 
-		if(!numeranda.ui.getIfSomeAction() && numeranda.ui.getPositionPx(this.dragbar).width<numeranda.ui.MIN_WIDTH){
+		if(!Master.getIfSomeAction() && Master.getPositionPx(this.dragbar).width<this.master.MIN_WIDTH){
 			try{
-				numeranda.ui.removeDiv(this.id);
+				this.master.removeDiv(this.id);
 			}
 
 			catch{
@@ -83,27 +83,27 @@ export class HorizontalDragbar extends Dragbar{
 		var s = new Set([...this.topWindow, ...this.bottomWindow])
 		var a = Array.from(s);
 
-		var leftMin = numeranda.ui.getPosition(a[0].window).left;
+		var leftMin = this.master.getPosition(a[0].window).left;
 		for (var i=1; i<a.length; i++){
-  			if(leftMin > numeranda.ui.getPosition(a[i].window).left)
-  				leftMin = numeranda.ui.getPosition(a[i].window).left;
+  			if(leftMin > this.master.getPosition(a[i].window).left)
+  				leftMin = this.master.getPosition(a[i].window).left;
 		};
 
 		this.dragbar.style.left = leftMin + "%";
 
-		var rightMax = numeranda.ui.getPosition(a[0].window).right;
+		var rightMax = this.master.getPosition(a[0].window).right;
 		for (var i=1; i<a.length; i++){
-  			if(rightMax < numeranda.ui.getPosition(a[i].window).right)
-  				rightMax = numeranda.ui.getPosition(a[i].window).right;
+  			if(rightMax < this.master.getPosition(a[i].window).right)
+  				rightMax = this.master.getPosition(a[i].window).right;
 		};
 		
-		this.dragbar.style.width = (rightMax - numeranda.ui.getPosition(this.dragbar).left) + "%";
+		this.dragbar.style.width = (rightMax - this.master.getPosition(this.dragbar).left) + "%";
 
 
-		if(!numeranda.ui.getIfSomeAction() && numeranda.ui.getPosition(this.dragbar).width<numeranda.ui.MIN_WIDTH){
+		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).width<this.master.MIN_WIDTH){
 			try{
 				console.log(this.id + " became too thin, so will be deleted.")
-				numeranda.ui.removeDiv(this.id);
+				this.master.removeDiv(this.id);
 			}
 
 			catch{
@@ -117,16 +117,16 @@ export class HorizontalDragbar extends Dragbar{
 		// counts in absolute position of conteiner!
 		var containment = $(this.dragbar).draggable( "option", "containment" )
 		var left = containment[0];
-		var top = numeranda.ui.getPositionPx(numeranda.ui.container).top;
+		var top = Master.getPositionPx(this.master.container).top;
 		var right = containment[2];
-		var bottom = numeranda.ui.getPositionPx(numeranda.ui.container).bottom;
+		var bottom = Master.getPositionPx(this.master.container).bottom;
 
 		if (this.topWindow.size>0){
 			let a = Array.from(this.topWindow);
-			var topMax = numeranda.ui.getPositionPx(a[0].window).top;
+			var topMax = Master.getPositionPx(a[0].window).top;
 			for (var i=1; i<this.topWindow.size; i++){
-  				if(topMax < numeranda.ui.getPositionPx(a[i].window).top)
-  					topMax = numeranda.ui.getPositionPx(a[i].window).top;
+  				if(topMax < Master.getPositionPx(a[i].window).top)
+  					topMax = Master.getPositionPx(a[i].window).top;
 			};
 
 		}
@@ -134,16 +134,15 @@ export class HorizontalDragbar extends Dragbar{
 		
 		if (this.bottomWindow.size>0){
 			let a = Array.from(this.bottomWindow);
-			var bottomMin = numeranda.ui.getPositionPx(a[0].window).bottom;
+			var bottomMin = Master.getPositionPx(a[0].window).bottom;
 			for (var i=1; i<this.bottomWindow.size; i++){
-  				if(bottomMin > numeranda.ui.getPositionPx(a[i].window).bottom)
-  					bottomMin = numeranda.ui.getPositionPx(a[i].window).bottom;
+  				if(bottomMin > Master.getPositionPx(a[i].window).bottom)
+  					bottomMin = Master.getPositionPx(a[i].window).bottom;
 			};
 		}
 	
 		$(this.dragbar).draggable( "option", "containment", [left, topMax+top, right, bottomMin+top]);
 		$(this.dragbar).data('uiDraggable')._setContainment(); // nessesary to change the containment during drag
-		console.log($(this.dragbar).draggable( "option", "containment" ))
 	}
 
 	resizeWindows(){
@@ -183,7 +182,7 @@ export class HorizontalDragbar extends Dragbar{
 
 	onStop(){
 		//recalculate to %
-		this.dragbar.style.top = numeranda.ui.getPosition(this.dragbar).top + "%";
+		this.dragbar.style.top = this.master.getPosition(this.dragbar).top + "%";
 
 		var ifKillMyself = false;
 
@@ -197,18 +196,18 @@ export class HorizontalDragbar extends Dragbar{
 		//console.log(ifKillMyself)
 		
 		if (ifKillMyself!=0)
-			numeranda.ui.removeDiv(this.id);
+			this.master.removeDiv(this.id);
 
 	}
 	/*splitTopWindowPx(wnd){
-		var newDragbar = new HorizontalDragbar("", "standardHorizontalDragbar");
-		newDragbar.dragbar.style.top = numeranda.ui.getPositionPx(wnd.window).height/2 + numeranda.ui.getPositionPx(wnd.window).top + "px";
-		newDragbar.dragbar.style.left =  numeranda.ui.getPositionPx(wnd.window).left + "px"
+		var newDragbar = new HorizontalDragbar(this.master);
+		newDragbar.dragbar.style.top = Master.getPositionPx(wnd.window).height/2 + Master.getPositionPx(wnd.window).top + "px";
+		newDragbar.dragbar.style.left =  Master.getPositionPx(wnd.window).left + "px"
 		this.removeTopWindow(wnd);
 
 		newDragbar.addTopWindow(wnd);
 
-		var newWindow = new Window("", "standardWindow");
+		var newWindow = new Window(this.master);
 		this.addTopWindow(newWindow);
 		newDragbar.addBottomWindow(newWindow);
 		if(wnd.leftDragbar!=null)
@@ -218,19 +217,19 @@ export class HorizontalDragbar extends Dragbar{
 		newWindow.fitTheAreaBetweenDragbars();
 		newDragbar.fitToWindows();
 
-		numeranda.ui.pushWindow(newWindow);
-		numeranda.ui.pushDragbar(newDragbar);
+		this.master.pushWindow(newWindow);
+		this.master.pushDragbar(newDragbar);
 
 	}*/
 
 	splitTopWindow(wnd){
-		var newDragbar = new HorizontalDragbar("", "standardHorizontalDragbar");
-		newDragbar.setPosition(numeranda.ui.getPosition(wnd.window).height/2 + numeranda.ui.getPosition(wnd.window).top )
+		var newDragbar = new HorizontalDragbar(this.master);
+		newDragbar.setPosition(this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top )
 		this.removeTopWindow(wnd);
 
 		newDragbar.addTopWindow(wnd);
 
-		var newWindow = new Window("", "standardWindow");
+		var newWindow = new Window(this.master);
 		this.addTopWindow(newWindow);
 		newDragbar.addBottomWindow(newWindow);
 		if(wnd.leftDragbar!=null)
@@ -240,8 +239,8 @@ export class HorizontalDragbar extends Dragbar{
 		newWindow.fitTheAreaBetweenDragbars();
 		newDragbar.fitToWindows();
 
-		//numeranda.ui.pushWindow(newWindow);
-		//numeranda.ui.pushDragbar(newDragbar);
+		//this.master.pushWindow(newWindow);
+		//this.master.pushDragbar(newDragbar);
 
 	}
 
@@ -268,18 +267,17 @@ export class HorizontalDragbar extends Dragbar{
 		var self = this;
 		$(this.dragbar).draggable({
 			axis: "y",
-			containment: [numeranda.ui.getPositionPx(numeranda.ui.container).left, numeranda.ui.getPositionPx(numeranda.ui.container).top, numeranda.ui.getPositionPx(numeranda.ui.container).right, numeranda.ui.getPositionPx(numeranda.ui.container).bottom],
+			containment: [Master.getPositionPx(this.master.container).left, Master.getPositionPx(this.master.container).top, Master.getPositionPx(this.master.container).right, Master.getPositionPx(this.master.container).bottom],
 			start: function(){
 				self.setNewContainments();
-				console.log($(self.dragbar).draggable( "option", "containment" ));
 			},
 			//stop: function(){
 			drag: function(){
-				numeranda.ui.setIfSomeAction(true);
+				self.master.setIfSomeAction(true);
 				self.resizeWindows();
 			},
 			stop: function(){
-				numeranda.ui.setIfSomeAction(false);
+				self.master.setIfSomeAction(false);
 				self.resizeWindows();
 				self.onStop();
 			},

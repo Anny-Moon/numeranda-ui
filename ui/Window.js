@@ -1,12 +1,15 @@
+import {Master} from './Master.js';
+
 export class Window{
-	constructor(id, extraClasses){
+	constructor(master, id, extraClasses){
+		this.master = master;
 		if(id=="" || id == null){
-			id = "window" + numeranda.ui.getWindowCounter();
+			id = "window" + this.master.getWindowCounter();
 		}
 		if(extraClasses == "" || extraClasses == null)
 			extraClasses = "standardWindow";
 		this.id = id;
-		this.window = numeranda.ui.createDiv(id, extraClasses);
+		this.window = this.master.createDiv(id, extraClasses);
 		this.rightNeighbor = [];
 		this.bottomNeighbor = null;
 		const color = Math.floor(Math.random()*16777215).toString(16);
@@ -18,9 +21,9 @@ export class Window{
 		this.rightDragbar = null;
 		this.topDragbar = null;
 		this.bottomDragbar = null;
-		numeranda.ui.windowCounterPlusPlus();
+		this.master.windowCounterPlusPlus();
 
-		numeranda.ui.pushWindow(this);
+		this.master.pushWindow(this);
 		
 	}
 
@@ -48,7 +51,7 @@ export class Window{
 
 
 	ifToBeRemovedByVerticalDragbar(owner){
-		if (numeranda.ui.getPositionPx(this.window).width<numeranda.ui.MIN_WIDTH){
+		if (Master.getPositionPx(this.window).width<this.master.MIN_WIDTH){
 			if(this.leftDragbar!=null){
 				this.leftDragbar.newRightWindows(owner);
 				this.leftDragbar.newLeftWindows(owner);
@@ -59,10 +62,10 @@ export class Window{
 				this.rightDragbar.newLeftWindows(owner);
 			}
 			
-			//numeranda.ui.removeDiv(owner.id);
+			//this.master.removeDiv(owner.id);
 			this.sayGoodbyeToFriends();
 			console.log(this.id + " will say to kill " + owner.id);	
-			numeranda.ui.removeDiv(this.id);
+			this.master.removeDiv(this.id);
 			
 			return true;
 		}
@@ -71,7 +74,7 @@ export class Window{
 
 	
 	ifToBeRemovedByHorizontalDragbar(owner){
-		if (numeranda.ui.getPositionPx(this.window).height<numeranda.ui.MIN_HEIGHT){
+		if (Master.getPositionPx(this.window).height<this.master.MIN_HEIGHT){
 			if(this.topDragbar!=null){
 				this.topDragbar.newBottomWindows(owner);
 				this.topDragbar.newTopWindows(owner);
@@ -81,10 +84,10 @@ export class Window{
 				this.bottomDragbar.newTopWindows(owner);
 			}
 
-			//numeranda.ui.removeDiv(owner.id);
+			//this.master.removeDiv(owner.id);
 			this.sayGoodbyeToFriends();
 			console.log(this.id + " will say to kill " + owner.id);
-			numeranda.ui.removeDiv(this.id);
+			this.master.removeDiv(this.id);
 			return true;
 		}
 		return false;
@@ -112,32 +115,32 @@ export class Window{
 	fitTheAreaBetweenDragbars(){
 		var top = 0;
 		var left = 0;
-		//var height = numeranda.ui.getPositionPx(numeranda.ui.container).height;
-		//var width = numeranda.ui.getPositionPx(numeranda.ui.container).width;
+		//var height = Master.getPositionPx(this.master.container).height;
+		//var width = Master.getPositionPx(this.master.container).width;
 
-		var height = numeranda.ui.getPosition(numeranda.ui.container).height;
-		var width = numeranda.ui.getPosition(numeranda.ui.container).width;		
+		var height = this.master.getPosition(this.master.container).height;
+		var width = this.master.getPosition(this.master.container).width;		
 		
 		if(this.topDragbar!=null){
-			//top = numeranda.ui.getPositionPx(this.topDragbar.dragbar).top;
-			top = numeranda.ui.getPosition(this.topDragbar.dragbar).top;
+			//top = Master.getPositionPx(this.topDragbar.dragbar).top;
+			top = this.master.getPosition(this.topDragbar.dragbar).top;
 			height = height - top;
 		}
 
 		if(this.bottomDragbar!=null){
-			//height = numeranda.ui.getPositionPx(this.bottomDragbar.dragbar).top - top;
-			height = numeranda.ui.getPosition(this.bottomDragbar.dragbar).top - top;
+			//height = Master.getPositionPx(this.bottomDragbar.dragbar).top - top;
+			height = this.master.getPosition(this.bottomDragbar.dragbar).top - top;
 		}
 
 		if(this.leftDragbar!=null){
-			//left = numeranda.ui.getPositionPx(this.leftDragbar.dragbar).left
-			left = numeranda.ui.getPosition(this.leftDragbar.dragbar).left
+			//left = Master.getPositionPx(this.leftDragbar.dragbar).left
+			left = this.master.getPosition(this.leftDragbar.dragbar).left
 			width = width - left;
 		}
 
 		if(this.rightDragbar!=null){
-			width = numeranda.ui.getPosition(this.rightDragbar.dragbar).left - left;
-			//width = numeranda.ui.getPositionPx(this.rightDragbar.dragbar).left - left;
+			width = this.master.getPosition(this.rightDragbar.dragbar).left - left;
+			//width = Master.getPositionPx(this.rightDragbar.dragbar).left - left;
 		}
 		/*
 		this.window.style.left = left + "px";
@@ -178,7 +181,7 @@ export class Window{
 	}
 
 	setWidth(value){
-		this.window.style.width = (value - numeranda.ui.getPosition(this.window).left)+ "%";
+		this.window.style.width = (value - this.master.getPosition(this.window).left)+ "%";
 
 	}
 
@@ -188,7 +191,7 @@ export class Window{
 	}
 
 	setHeight(value){
-		this.window.style.height = (value - numeranda.ui.getPosition(this.window).top)+ "%";
+		this.window.style.height = (value - this.master.getPosition(this.window).top)+ "%";
 	}
 
 	setTop(value){
