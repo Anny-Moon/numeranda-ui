@@ -49,8 +49,8 @@ export class HorizontalDragbar extends Dragbar{
 
 		var s = new Set([...this.topWindow, ...this.bottomWindow])
 		var a = Array.from(s);
-
 		var rightMax = Master.getPositionPx(a[0].window).right;
+
 		for (var i=1; i<a.length; i++){
   			if(rightMax < Master.getPositionPx(a[i].window).right)
   				rightMax = Master.getPositionPx(a[i].window).right;
@@ -109,8 +109,10 @@ export class HorizontalDragbar extends Dragbar{
 			catch{
 				console.log("It was dead when I came. I swear!")
 			}
-		} 
+		}
 
+		// for Safari
+		this.dragbar.style.position = "absolute";
 	}
 
 	setNewContainments(){
@@ -128,9 +130,7 @@ export class HorizontalDragbar extends Dragbar{
   				if(topMax < Master.getPositionPx(a[i].window).top)
   					topMax = Master.getPositionPx(a[i].window).top;
 			};
-
 		}
-
 		
 		if (this.bottomWindow.size>0){
 			let a = Array.from(this.bottomWindow);
@@ -148,12 +148,10 @@ export class HorizontalDragbar extends Dragbar{
 	resizeWindows(){
 		self = this;
 		this.topWindow.forEach(function (item) {
-  			//item.resizeAsLeftWindow(delta, self);
   			item.resize()
 		});
 
 		this.bottomWindow.forEach(function (item) {
-  			//item.resizeAsRightWindow(delta);
   			item.resize()
 		});
 	}
@@ -161,12 +159,9 @@ export class HorizontalDragbar extends Dragbar{
 	newTopWindows(takeFromThisDragbar){
 		//this.topWindow.delete(deleteThis);
 		self = this;
-		console.log(takeFromThisDragbar.id + " take from this ")
 		takeFromThisDragbar.topWindow.forEach(function (item) {
   			self.addTopWindow(item);
-  			console.log(self.id + " topw " + item.id)
 		});
-		
 		this.fitToWindows();
 	}
 
@@ -175,7 +170,6 @@ export class HorizontalDragbar extends Dragbar{
 		self = this;
 		takeFromThisDragbar.bottomWindow.forEach(function (item) {
   			self.addBottomWindow(item);
-
 		});
 		this.fitToWindows();
 	}
@@ -193,12 +187,12 @@ export class HorizontalDragbar extends Dragbar{
 		this.bottomWindow.forEach(function (item) {
   			ifKillMyself += item.ifToBeRemovedByHorizontalDragbar(self);
 		});
-		//console.log(ifKillMyself)
 		
 		if (ifKillMyself!=0)
 			this.master.removeDiv(this.id);
 
 	}
+
 	/*splitTopWindowPx(wnd){
 		var newDragbar = new HorizontalDragbar(this.master);
 		newDragbar.dragbar.style.top = Master.getPositionPx(wnd.window).height/2 + Master.getPositionPx(wnd.window).top + "px";
@@ -217,9 +211,6 @@ export class HorizontalDragbar extends Dragbar{
 		newWindow.fitTheAreaBetweenDragbars();
 		newDragbar.fitToWindows();
 
-		this.master.pushWindow(newWindow);
-		this.master.pushDragbar(newDragbar);
-
 	}*/
 
 	splitTopWindow(wnd){
@@ -236,15 +227,15 @@ export class HorizontalDragbar extends Dragbar{
 			wnd.leftDragbar.addRightWindow(newWindow);
 		if(wnd.rightDragbar!=null)
 			wnd.rightDragbar.addLeftWindow(newWindow);
+
 		newWindow.fitTheAreaBetweenDragbars();
 		newDragbar.fitToWindows();
-
-		//this.master.pushWindow(newWindow);
-		//this.master.pushDragbar(newDragbar);
 
 	}
 
 	splitThistWindow(wnd){
+		// TO DO
+		// set limitations on the size while can be split still
 		if(this.topWindow.has(wnd)){
 			console.log("found top " + wnd.id);
 			this.splitTopWindow(wnd);
@@ -257,7 +248,6 @@ export class HorizontalDragbar extends Dragbar{
 	makeDoubleClickable(){
 		var self = this;
 		$(this.dragbar).dblclick(function(){
-    		console.log(self.id);
     		self.splitThistWindow(Array.from(self.topWindow)[0]);
   		});
 	}
@@ -271,7 +261,6 @@ export class HorizontalDragbar extends Dragbar{
 			start: function(){
 				self.setNewContainments();
 			},
-			//stop: function(){
 			drag: function(){
 				self.master.setIfSomeAction(true);
 				self.resizeWindows();

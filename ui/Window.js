@@ -152,6 +152,8 @@ export class Window{
 		this.window.style.width = width + "%";
 		this.window.style.top = top + "%";
 		this.window.style.height = height + "%";
+		// for Safari
+		this.window.style.position = "absolute";
 
 
 	}

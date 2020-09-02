@@ -12,7 +12,6 @@ export class VerticalDragbar extends Dragbar{
 		this.rightWindow = new Set();
 		this.makeDraggable();
 		this.makeDoubleClickable();
-		
 	}
 
 	addLeftWindow(div){
@@ -36,9 +35,7 @@ export class VerticalDragbar extends Dragbar{
 	removeLeftWindow(div){
 		console.log(this.id + ": I will remove from my neighbours " + div.id);
 		this.leftWindow.delete(div);
-
 	}
-
 
 	setHeightPx(value){
 		this.dragbar.style.height = value + "px";
@@ -79,15 +76,12 @@ export class VerticalDragbar extends Dragbar{
 			}
 		} 
 
-	
 	}*/
 
 	fitToWindows(){
 
 		var s = new Set([...this.leftWindow, ...this.rightWindow])
 		var a = Array.from(s);
-		var bottomMax = this.master.getPosition(a[0].window).bottom;
-
 		
 		var topMin = this.master.getPosition(a[0].window).top;
 		for (var i=1; i<a.length; i++){
@@ -97,6 +91,7 @@ export class VerticalDragbar extends Dragbar{
 
 		this.dragbar.style.top = topMin + "%";
 
+		var bottomMax = this.master.getPosition(a[0].window).bottom;
 		for (var i=1; i<a.length; i++){
   			if(bottomMax < this.master.getPosition(a[i].window).bottom)
   				bottomMax = this.master.getPosition(a[i].window).bottom;
@@ -115,9 +110,13 @@ export class VerticalDragbar extends Dragbar{
 				console.log("It was dead when I came. I swear!")
 			}
 		} 
+
+		// for Safari
+		this.dragbar.style.position = "absolute";
 	}
 
 	setNewContainments(){
+		// counts in absolute position of conteiner!
 		var containment = $(this.dragbar).draggable( "option", "containment" );
 		var left = Master.getPositionPx(this.master.container).left;
 		var top = containment[1];
@@ -132,7 +131,6 @@ export class VerticalDragbar extends Dragbar{
   					leftMax = Master.getPositionPx(a[i].window).left;
 			};
 		}
-
 		
 		if (this.rightWindow.size>0){
 			let a = Array.from(this.rightWindow);
@@ -142,15 +140,12 @@ export class VerticalDragbar extends Dragbar{
   					rightMin = Master.getPositionPx(a[i].window).right;
 			};
 		}
-	
 		
 		$(this.dragbar).draggable( "option", "containment", [leftMax + left, top, rightMin + left, bottom]);
 		$(this.dragbar).data('uiDraggable')._setContainment(); // nessesary to change the containment during drag
-		
 	}
 
-	
-	resizeWindows(delta){
+	resizeWindows(){
 		self = this;
 		this.leftWindow.forEach(function (item) {
   			item.resize()
@@ -179,9 +174,7 @@ export class VerticalDragbar extends Dragbar{
 		this.fitToWindows();
 	}
 
-
 	onStop(){
-
 		//recalculate to %
 		this.dragbar.style.left = this.master.getPosition(this.dragbar).left + "%";
 
@@ -241,7 +234,6 @@ export class VerticalDragbar extends Dragbar{
 	}
 
 	splitThistWindow(wnd){
-
 		// TO DO
 		// set limitations on the size while can be split still
 		if(this.leftWindow.has(wnd)){
@@ -256,8 +248,6 @@ export class VerticalDragbar extends Dragbar{
 	makeDoubleClickable(){
 		var self = this;
 		$(this.dragbar).dblclick(function(){
-    		//alert("The paragraph was double-clicked.");
-    		console.log(self.id);
     		self.splitThistWindow(Array.from(self.leftWindow)[0]);
   		});
 	}
@@ -270,17 +260,12 @@ export class VerticalDragbar extends Dragbar{
 			containment: [Master.getPositionPx(this.master.container).left, Master.getPositionPx(this.master.container).top, Master.getPositionPx(this.master.container).right, Master.getPositionPx(this.master.container).bottom],
 			start: function(){
 				self.setNewContainments();
-				initialPosition = Master.getPositionPx(self.dragbar).left;
 			},
-			//stop: function(){
 			drag: function(){
-				
 				self.master.setIfSomeAction(true);
 				self.resizeWindows();
-
 			},
 			stop: function(){
-				//self.onStop();
 				self.master.setIfSomeAction(false);
 				self.resizeWindows();
 				self.onStop();
