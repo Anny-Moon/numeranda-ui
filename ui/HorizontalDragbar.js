@@ -98,7 +98,7 @@ export class HorizontalDragbar extends Dragbar{
 		};
 		
 		this.dragbar.style.width = (rightMax - this.master.getPosition(this.dragbar).left) + "%";
-
+		console.log("debug2: " + (this.master.getPosition(this.dragbar).left))
 
 		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).width<this.master.MIN_WIDTH){
 			try{

@@ -30,42 +30,65 @@
 
       var master = new ui.Master("containerMain");
 
-      var w1 = new ui.Window(master, "editor")
+      //console.log("in html: " + master.container.getBoundingClientRect().height)
+      
 
-      var w2 = new ui.Window(master, "plot")
+      
 
-      var w3 = new ui.Window(master, "console")
+      setTimeout(
+      function ()
+      {var size = document.getElementById("containerMain").getBoundingClientRect();
+            console.log("height: " + size.height);
+            console.log("width: " + size.width);      
+            console.log("top : " + size.top);
+            console.log("bottom : " + size.bottom);
+            console.log("left : " + size.left);
+            console.log("right : " + size.right);
 
-      var d1 = new ui.VerticalDragbar(master);
-      d1.setPosition(40);
-
-      var d2 = new ui.HorizontalDragbar(master);
-      d2.setPosition(50);
-
-      d1.addLeftWindow(w1);
-      d1.addRightWindow(w2);
-
-      d2.addTopWindow(w1);
-      d2.addTopWindow(w2);
-      d2.addBottomWindow(w3)
-
-      //var wBorder = new ui.Window();
-      var dBorder1 = new ui.VerticalDragbar(master);
-      dBorder1.setPosition(100);
-      dBorder1.addLeftWindow(w2);
-      dBorder1.addLeftWindow(w3);
-      dBorder1.lock();
-      //dBorder.addRightWindow(wBorder);
-
-      var dBorder2 = new ui.HorizontalDragbar(master);
-      dBorder2.setPosition(100);
-      dBorder2.addTopWindow(w3);
-
-      dBorder2.lock();
+            console.log("css " + $("#containerMain").css('height'));
+            console.log("height " + $("#containerMain").offset().height);
+            console.log("func " + $("#containerMain").height());
+      
 
 
+            var w1 = new ui.Window(master, "editor")
 
-      master.makeLayout();
+            var w2 = new ui.Window(master, "plot")
+
+            var w3 = new ui.Window(master, "console")
+
+            var d1 = new ui.VerticalDragbar(master);
+            d1.setPosition(40);
+
+            var d2 = new ui.HorizontalDragbar(master);
+            d2.setPosition(50);
+
+            d1.addLeftWindow(w1);
+            d1.addRightWindow(w2);
+
+            d2.addTopWindow(w1);
+            d2.addTopWindow(w2);
+            d2.addBottomWindow(w3)
+
+            //var wBorder = new ui.Window();
+            var dBorder1 = new ui.VerticalDragbar(master);
+            dBorder1.setPosition(100);
+            dBorder1.addLeftWindow(w2);
+            dBorder1.addLeftWindow(w3);
+            dBorder1.lock();
+            //dBorder.addRightWindow(wBorder);
+
+            var dBorder2 = new ui.HorizontalDragbar(master);
+            dBorder2.setPosition(100);
+            dBorder2.addTopWindow(w3);
+
+            dBorder2.lock();
+
+
+
+            master.makeLayout();
+      },
+      500);
 
 
     </script>

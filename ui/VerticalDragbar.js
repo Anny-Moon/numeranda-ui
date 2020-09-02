@@ -43,6 +43,8 @@ export class VerticalDragbar extends Dragbar{
 
 	setPosition(left){
 		this.dragbar.style.left = left + "%";
+		this.dragbar.style.top = "0%"
+		this.dragbar.style.hight = "0%"
 	}
 
 	/*fitToWindowsPx(){
@@ -84,12 +86,16 @@ export class VerticalDragbar extends Dragbar{
 		var a = Array.from(s);
 		
 		var topMin = this.master.getPosition(a[0].window).top;
+		console.log("debug1.2: " + a[0].id);
+		console.log("debug1.3: " + (a[0].window))
+
 		for (var i=1; i<a.length; i++){
   			if(topMin > this.master.getPosition(a[i].window).top)
   				topMin = this.master.getPosition(a[i].window).top;
 		};
 
 		this.dragbar.style.top = topMin + "%";
+		console.log("debug1.1: " + (topMin))
 
 		var bottomMax = this.master.getPosition(a[0].window).bottom;
 		for (var i=1; i<a.length; i++){
@@ -98,6 +104,7 @@ export class VerticalDragbar extends Dragbar{
 		};
 		
 		this.dragbar.style.height = (bottomMax - this.master.getPosition(this.dragbar).top) + "%";
+		console.log("debug1: " + (this.master.getPosition(this.dragbar).top))
 
 
 		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).height<this.master.MIN_HEIGHT){

@@ -86,7 +86,8 @@ export class Master{
 
 	getPosition(div){
 		let containerPosition = this.container.getBoundingClientRect();
-		//console.log("div " + div);
+		//console.log("called ");
+		console.log("containerPosition " + containerPosition.height);
 
 		let left = Master.getPositionPx(div).left/containerPosition.width * 100;
 		let top = Master.getPositionPx(div).top/containerPosition.height * 100;
