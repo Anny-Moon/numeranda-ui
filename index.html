@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NUMERANDA</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" />
+    <link rel="stylesheet" type="text/css" href="chartist-js/chartist.min.css" />
+
+    <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" type="text/css" href="ui/stylesheet.css" />
+  </head>
+  <body>
+    <div id="toolbar" class="ui-widget-content"></div>
+
+    
+
+    <div id="containerMain" >
+    </div>
+
+    <script type="module">
+      import * as ui from './ui/main.js';
+      window.numeranda = {};
+      window.numeranda.ui = ui;
+      //ui.init();
+
+      ui.setContainerByID("containerMain");
+      //ui.setContainer();
+
+      var w1 = new ui.Window("editor")
+
+      var w2 = new ui.Window("plot")
+
+      var w3 = new ui.Window("console")
+
+      var d1 = new ui.VerticalDragbar();
+      d1.setPosition(40);
+
+      var d2 = new ui.HorizontalDragbar();
+      d2.setPosition(20);
+
+      d1.addLeftWindow(w1);
+      d1.addRightWindow(w2);
+
+      d2.addTopWindow(w1);
+      d2.addTopWindow(w2);
+      d2.addBottomWindow(w3)
+
+      //var wBorder = new ui.Window();
+      var dBorder1 = new ui.VerticalDragbar();
+      dBorder1.setPosition(100);
+      dBorder1.addLeftWindow(w2);
+      dBorder1.addLeftWindow(w3);
+      dBorder1.lock();
+      //dBorder.addRightWindow(wBorder);
+
+      var dBorder2 = new ui.HorizontalDragbar();
+      dBorder2.setPosition(100);
+      dBorder2.addTopWindow(w3);
+
+      dBorder2.lock();
+
+
+
+      ui.makeLayout();
+
+
+    </script>
+
+    
+  </body>

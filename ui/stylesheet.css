@@ -1,0 +1,81 @@
+#container {
+	background-color: #f1f1f1;
+	width: 100%;
+	overflow: auto;
+	position: absolute;
+	top: 100px;
+	left: 8px;
+	height: 300px;
+
+}
+
+#containerMain {
+	position: absolute;
+	background-color: #f1f1f1;
+	width: 90%;
+	top: 10%;
+	left: 10%;
+	height: 90%;
+	overflow: auto;
+
+}
+
+
+#toolbar {
+	position: absolute;
+	width: 100%;
+	background: black;
+	height: 50px;
+}
+
+.standardWindow {
+	position: absolute;
+}
+
+.standardVerticalDragbar {
+	position: absolute;
+	transform: translate(-50%, 0);
+	top: 0;
+	cursor: col-resize;
+	z-index: 3;
+	padding: 0px;
+	width: 6px;
+	background-color: black;
+}
+
+.standardHorizontalDragbar {
+	position: absolute;
+	transform: translate(0%, -50%);
+	top: 0;
+	cursor: row-resize;
+	z-index: 3;
+	padding: 0px;
+	height: 6px;
+	background-color: black;
+}
+
+#dragbar-1{
+	top:0;
+	left: 40%;
+	height: 50%;
+}
+
+#dragbar-2{
+	top:0;
+	left: 80%;
+	height: 50%;
+}
+
+#dragbar-3{
+	top:20%;
+	left: 40%;
+	width: 40%;
+	
+}
+
+#dragbar-4{
+	top:50%;
+	left: 0%;
+	width: 100%;
+
+}
