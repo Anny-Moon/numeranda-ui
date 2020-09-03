@@ -178,10 +178,6 @@ export class Window{
 
 	}
 
-	setRightNeighbor(div){
-		this.rightNeighbor.push(div);
-	}
-
 	setWidth(value){
 		this.window.style.width = (value - this.master.getPosition(this.window).left)+ "%";
 
@@ -198,6 +194,23 @@ export class Window{
 
 	setTop(value){
 		this.window.style.top = value + "%";
+	}
+
+	hover(owner, flag){
+		var self = this;
+		if(flag){
+			$(this.window).hover(function(){
+				//console.log(" hover in " + self.id)
+				owner.makeMyWindowsUnhover();
+				owner.splitThistWindow(self);
+			}
+				)
+			
+		}
+
+		else{
+			$(this.window).off( "mouseenter mouseleave" );
+		}
 	}
 
 }

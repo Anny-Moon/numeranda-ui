@@ -23,6 +23,7 @@ export class Dragbar{
 		this.isLocked = false;
 	}
 
+	
 
 }
 

@@ -98,7 +98,6 @@ export class HorizontalDragbar extends Dragbar{
 		};
 		
 		this.dragbar.style.width = (rightMax - this.master.getPosition(this.dragbar).left) + "%";
-		console.log("debug2: " + (this.master.getPosition(this.dragbar).left))
 
 		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).width<this.master.MIN_WIDTH){
 			try{
@@ -241,14 +240,16 @@ export class HorizontalDragbar extends Dragbar{
 			this.splitTopWindow(wnd);
 		}
 
-		if(this.bottomWindow.has(wnd))
+		if(this.bottomWindow.has(wnd)){
 			console.log("found bottom " + wnd.id);
+		}
 	}
 
 	makeDoubleClickable(){
 		var self = this;
 		$(this.dragbar).dblclick(function(){
-    		self.splitThistWindow(Array.from(self.topWindow)[0]);
+    		//self.splitThistWindow(Array.from(self.topWindow)[0]);
+    		self.makeMyWindowsHover();
   		});
 	}
 
@@ -272,5 +273,17 @@ export class HorizontalDragbar extends Dragbar{
 			},
 
 		});
+	}
+
+	makeMyWindowsHover(){
+		var self = this;
+		this.topWindow.forEach(element => element.hover(self, true));
+		this.bottomWindow.forEach(element => element.hover(self, true));
+	}
+
+	makeMyWindowsUnhover(){
+		var self = this;
+		this.topWindow.forEach(element => element.hover(self, false));
+		this.bottomWindow.forEach(element => element.hover(self, false));
 	}
 }
