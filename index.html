@@ -14,12 +14,35 @@
 	<link rel="stylesheet" type="text/css" href="ui/stylesheet.css" />
 	</head>
 	<body>
+
+	<div id="menu">
+		  <ul>
+		    <li><a href="#">Link One</a></li>
+		    <li><a href="#">Link Two</a>
+		      <ul class="dropdown-menu">
+		        <li><a href="#">Dropdown Link</a></li>
+		        <li><a href="#">Another Dropdown Link</a></li>
+		      </ul>
+		    </li>
+		  </ul>
+	</div>
 	<div id="toolbar" class="ui-widget-content"></div>
 
 	
 
 	<div id="containerMain" >
+		
 	</div>
+	
+	<script>
+		$(document).ready(function(){
+  $("#menu li").hover(function(){
+    $(".dropdown-menu", this).slideDown(100);
+  }, function(){
+    $(".dropdown-menu", this).stop().slideUp(100);
+  });
+})
+	</script>
 
 	<script type="module">
 		import * as ui from './ui/Master.js';

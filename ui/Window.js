@@ -1,4 +1,5 @@
 import {Master} from './Master.js';
+import {Menu} from './Menu.js';
 
 export class Window{
 	constructor(master, id, extraClasses){
@@ -24,6 +25,8 @@ export class Window{
 		this.master.windowCounterPlusPlus();
 
 		this.master.pushWindow(this);
+
+		this.button = new Menu(this);
 		
 	}
 

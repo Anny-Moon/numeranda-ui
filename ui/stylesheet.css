@@ -54,6 +54,22 @@
 	background-color: black;
 }
 
+.menuButton{
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	height: 10px;
+	width: 10px;
+	background-color: black;
+
+}
+.menu { 
+	width: 150px;
+	height: 200px;
+	visibility: hidden;
+
+}
+
 #dragbar-1{
 	top:0;
 	left: 40%;
@@ -78,4 +94,24 @@
 	left: 0%;
 	width: 100%;
 
+}
+
+#menu{
+	/*visibility: hidden;*/
+}
+#menu a{
+ text-decoration: none;
+ color: #333;
+ font-family: sans-serif;
+ padding: 5px;
+ z-index: 5;
+
+}
+#menu ul li{
+ display: inline;
+ z-index: 5;
+}
+.dropdown-menu{
+ display: none;
+ z-index: 5;
 }

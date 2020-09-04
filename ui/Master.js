@@ -107,6 +107,13 @@ export class Master{
 		return {left:left, top:top, right: right, bottom:bottom, width:width, height:height};
 	}
 
+	static createDiv(parent, id, extraClasses){
+		var div = document.createElement("div");
+		div.id = id;
+		div.setAttribute("class", extraClasses);
+		console.log("The new " + id + " was created!")
+		return parent.appendChild(div);	
+	}
 	
 
 }
