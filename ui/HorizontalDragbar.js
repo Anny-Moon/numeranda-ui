@@ -43,6 +43,8 @@ export class HorizontalDragbar extends Dragbar{
 
 	setPosition(top){
 		this.dragbar.style.top = top + "%";
+		this.dragbar.style.left = "0%"
+		//this.dragbar.style.hight = "0%"
 	}
 
 	/*fitToWindowsPx(){
@@ -84,6 +86,7 @@ export class HorizontalDragbar extends Dragbar{
 		var a = Array.from(s);
 
 		var leftMin = this.master.getPosition(a[0].window).left;
+
 		for (var i=1; i<a.length; i++){
   			if(leftMin > this.master.getPosition(a[i].window).left)
   				leftMin = this.master.getPosition(a[i].window).left;

@@ -97,9 +97,7 @@ export class Window{
 		if(this.leftDragbar!=null)
 			this.leftDragbar.removeRightWindow(this);
 
-		console.log(this.id + "rightDB id: if any then next line");
 		if(this.rightDragbar!=null){
-			console.log( "rightDB id: "+ this.rightDragbar.id);
 			this.rightDragbar.removeLeftWindow(this);
 		}
 
@@ -200,7 +198,7 @@ export class Window{
 		var self = this;
 		if(flag){
 			$(this.window).hover(function(){
-				console.log(" hover in " + self.id)
+				console.log("Mouse in " + self.id + " detected.")
 				owner.makeMyWindowsUnhover();
 				owner.splitThistWindow(self);
 			}

@@ -44,7 +44,7 @@ export class VerticalDragbar extends Dragbar{
 	setPosition(left){
 		this.dragbar.style.left = left + "%";
 		this.dragbar.style.top = "0%"
-		this.dragbar.style.hight = "0%"
+		//this.dragbar.style.hight = "0%"
 	}
 
 	/*fitToWindowsPx(){
@@ -102,7 +102,6 @@ export class VerticalDragbar extends Dragbar{
 		
 		this.dragbar.style.height = (bottomMax - this.master.getPosition(this.dragbar).top) + "%";
 		
-
 		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).height<this.master.MIN_HEIGHT){
 			try{
 				console.log(this.id + " became too thin, so will be deleted.")
@@ -236,22 +235,45 @@ export class VerticalDragbar extends Dragbar{
 
 	}
 
+	splitRightWindow(wnd){
+		var newDragbar = new VerticalDragbar(this.master);
+		newDragbar.setPosition(this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left)
+		this.removeRightWindow(wnd);
+
+		newDragbar.addRightWindow(wnd);
+
+		var newWindow = new Window(this.master);
+		this.addRightWindow(newWindow);
+		newDragbar.addLeftWindow(newWindow);
+		if(wnd.topDragbar!=null)
+			wnd.topDragbar.addBottomWindow(newWindow);
+		if(wnd.bottomDragbar!=null)
+			wnd.bottomDragbar.addTopWindow(newWindow);
+
+		newWindow.fitTheAreaBetweenDragbars();
+		wnd.fitTheAreaBetweenDragbars();
+		newDragbar.fitToWindows();
+	}
+
 	splitThistWindow(wnd){
 		// TO DO
 		// set limitations on the size while can be split still
 		if(this.leftWindow.has(wnd)){
-			console.log("found left " + wnd.id);
+			console.log("Found left " + wnd.id);
 			this.splitLeftWindow(wnd);
 		}
 
-		if(this.rightWindow.has(wnd))
-			console.log("found right " + wnd.id);
+		if(this.rightWindow.has(wnd)){
+			console.log("Found right " + wnd.id);
+			this.splitRightWindow(wnd);
+		}
 	}
 
 	makeDoubleClickable(){
 		var self = this;
 		$(this.dragbar).dblclick(function(){
-    		self.splitThistWindow(Array.from(self.leftWindow)[0]);
+    		//self.splitThistWindow(Array.from(self.leftWindow)[0]);
+    		self.makeMyWindowsHover();
   		});
 	}
 
@@ -275,5 +297,17 @@ export class VerticalDragbar extends Dragbar{
 			},
 
 		});
+	}
+
+	makeMyWindowsHover(){
+		var self = this;
+		this.leftWindow.forEach(element => element.hover(self, true));
+		this.rightWindow.forEach(element => element.hover(self, true));
+	}
+
+	makeMyWindowsUnhover(){
+		var self = this;
+		this.leftWindow.forEach(element => element.hover(self, false));
+		this.rightWindow.forEach(element => element.hover(self, false));
 	}
 }
