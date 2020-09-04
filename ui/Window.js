@@ -200,7 +200,7 @@ export class Window{
 		var self = this;
 		if(flag){
 			$(this.window).hover(function(){
-				//console.log(" hover in " + self.id)
+				console.log(" hover in " + self.id)
 				owner.makeMyWindowsUnhover();
 				owner.splitThistWindow(self);
 			}

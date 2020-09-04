@@ -232,6 +232,26 @@ export class HorizontalDragbar extends Dragbar{
 
 	}
 
+	splitBottomWindow(wnd){
+		var newDragbar = new HorizontalDragbar(this.master);
+		newDragbar.setPosition(this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top)
+		this.removeBottomWindow(wnd);
+
+		newDragbar.addBottomWindow(wnd);
+
+		var newWindow = new Window(this.master);
+		this.addBottomWindow(newWindow);
+		newDragbar.addTopWindow(newWindow);
+		if(wnd.leftDragbar!=null)
+			wnd.leftDragbar.addRightWindow(newWindow);
+		if(wnd.rightDragbar!=null)
+			wnd.rightDragbar.addLeftWindow(newWindow);
+
+		newWindow.fitTheAreaBetweenDragbars();
+		wnd.fitTheAreaBetweenDragbars();
+		newDragbar.fitToWindows();
+	}
+
 	splitThistWindow(wnd){
 		// TO DO
 		// set limitations on the size while can be split still
@@ -242,6 +262,7 @@ export class HorizontalDragbar extends Dragbar{
 
 		if(this.bottomWindow.has(wnd)){
 			console.log("found bottom " + wnd.id);
+			this.splitBottomWindow(wnd);
 		}
 	}
 
