@@ -25,6 +25,8 @@ export class Master{
 		this.dragbarCounter = 1;
 		this.windowCounter = 1;
 
+		this.menuOptions = new Set();
+
 	}
 
 	setContainer(id){
@@ -82,6 +84,12 @@ export class Master{
 		var div = document.getElementById(id);
 	    div.parentNode.removeChild(div);
 	    console.log(id + " was deleted!")
+	}
+
+
+	addMenuOption(name){
+		this.menuOptions.add(name);
+		this.windows.forEach(element => element.updateMenu());
 	}
 
 	getPosition(div){

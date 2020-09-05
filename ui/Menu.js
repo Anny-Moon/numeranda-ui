@@ -4,6 +4,7 @@ import {Window} from './Window.js';
 export class Menu{
 	constructor(owner){
 		this.owner = owner;
+		this.master = owner.master;
 		this.id = owner.id + "_button"
 		this.button = Master.createDiv(owner.window, this.id , "menuButton");
 		this.makeButtonClickable();
@@ -11,7 +12,8 @@ export class Menu{
 		//this.menu = Master.createDiv(owner.window, this.owner.id+"_menu", "menu");
 		this.menu = document.getElementById("menu");
 		//self.menu.style.top = "500px"
-		this.fillMenu();
+		this.makeMenu();
+		this.menuOptions = new Set();
 	}
 
 
@@ -36,7 +38,7 @@ export class Menu{
         	
 	}
 
-	fillMenu(){
+	makeMenu(){
 		var self = this;
 
 		var menu = document.createElement("div");
@@ -48,14 +50,15 @@ export class Menu{
 
 		//this.menuList = this.owner.master.container.appendChild(list);
 
+/*
 		var li = document.createElement("li");
-  		//var inputValue = document.getElementById("myInput").value;
   		li.appendChild(document.createTextNode("option 1"));
   		this.menuList.appendChild(li);
+  		
   		var li2 = document.createElement("li");
   		li2.appendChild(document.createTextNode("option 2"));
-
-  		this.menuList.appendChild(li2);
+		this.menuList.appendChild(li2);
+*/  		
   		this.menu.style.display = "none"
 
 
@@ -67,10 +70,27 @@ export class Menu{
   		}, function(){
     		$(this).stop().slideUp(100);
   		});
-  	
-  		//this.menuList.style.top = "50%"
 
 
+	}
+
+	update(){
+		var self = this;
+
+		// delete all
+	
+		this.menuOptions.forEach(element => {
+			self.menuList.removeChild(element);
+			self.menuOptions.delete(element)
+
+		})
+		
+		// add new
+		this.master.menuOptions.forEach(element => {
+			var tmp = document.createElement("li")
+			tmp.appendChild(document.createTextNode(element));
+			self.menuOptions.add(self.menuList.appendChild(tmp));
+		})
 	}
 
 }

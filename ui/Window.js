@@ -214,4 +214,8 @@ export class Window{
 		}
 	}
 
+	updateMenu(){
+		this.button.update();
+	}
+
 }
