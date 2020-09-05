@@ -63,42 +63,16 @@
 	background-color: black;
 
 }
-.menu { 
-	width: 150px;
-	height: 200px;
-	visibility: hidden;
 
-}
-
-#dragbar-1{
-	top:0;
-	left: 40%;
-	height: 50%;
-}
-
-#dragbar-2{
-	top:0;
-	left: 80%;
-	height: 50%;
-}
-
-#dragbar-3{
-	top:20%;
-	left: 40%;
-	width: 40%;
-	
-}
-
-#dragbar-4{
-	top:50%;
-	left: 0%;
-	width: 100%;
-
-}
-
-#menu{
+.menu{
 	/*visibility: hidden;*/
+	background-color: gold;
+	position: absolute;
+	right: 1%;
+	bottom: 1%;
+
 }
+/*
 #menu a{
  text-decoration: none;
  color: #333;
@@ -114,4 +88,4 @@
 .dropdown-menu{
  display: none;
  z-index: 5;
-}
+}*/

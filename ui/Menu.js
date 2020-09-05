@@ -10,7 +10,7 @@ export class Menu{
 
 		//this.menu = Master.createDiv(owner.window, this.owner.id+"_menu", "menu");
 		this.menu = document.getElementById("menu");
-		self.menu.style.top = "500px"
+		//self.menu.style.top = "500px"
 		this.fillMenu();
 	}
 
@@ -30,17 +30,23 @@ export class Menu{
 
             //$(".dropdown-menu").slideDown(100);
 
-            $(self.menuList).slideDown(100);
+            $(self.menu).slideDown(100);
         	});
 
         	
 	}
 
 	fillMenu(){
-		//this.opt1 = Master.createDiv(this.menu,"opt1");
-		//this.opt2 = Master.createDiv(this.menu,"opt2");
+		var self = this;
+
+		var menu = document.createElement("div");
+		menu.setAttribute("class", "menu");
+		this.menu = this.owner.window.appendChild(menu);
+
 		var list = document.createElement("ul");
-		this.menuList = this.owner.window.appendChild(list);
+		this.menuList = this.menu.appendChild(list);
+
+		//this.menuList = this.owner.master.container.appendChild(list);
 
 		var li = document.createElement("li");
   		//var inputValue = document.getElementById("myInput").value;
@@ -50,9 +56,19 @@ export class Menu{
   		li2.appendChild(document.createTextNode("option 2"));
 
   		this.menuList.appendChild(li2);
-  		this.menuList.style.display = "none"
+  		this.menu.style.display = "none"
 
-  		this.menuList.style.top = "50%"
+
+  		this.menu.style.bottom = parseInt($(this.button).css('bottom'), 10) + "px";
+  		this.menu.style.right = parseInt($(this.button).css('right'), 10) + "px";
+  		
+  		$(this.menu).hover(function(){
+    	
+  		}, function(){
+    		$(this).stop().slideUp(100);
+  		});
+  	
+  		//this.menuList.style.top = "50%"
 
 
 	}
