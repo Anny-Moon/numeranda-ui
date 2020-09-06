@@ -29,7 +29,6 @@
 	<div id="toolbar" class="ui-widget-content"></div>
 
 	
-
 	<div id="containerMain" >
 		
 	</div>
@@ -42,6 +41,13 @@
     $(".dropdown-menu", this).stop().slideUp(100);
   });
 })
+	</script>
+
+	<script>
+		
+		function createPlotter(parentId){
+			$('#' + parentId).html("<h2> Plotte the best </h2>");
+		}
 	</script>
 
 	<script type="module">
@@ -95,10 +101,10 @@
 		//Safari can run makeLayout() only after the page is loaded
 		window.onload = function(){ console.log("........loaded");master.makeLayout();}
 		
-		master.addMenuOption("Plotter")
+		master.addMenuOption("Plotter", createPlotter)
 		master.addMenuOption("Editor")
 		master.addMenuOption("Console")
-		master.addMenuOption("ConsoleSuper")
+		master.addMenuOption("Console Super")
 		
 		//master.makeLayout();
 

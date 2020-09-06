@@ -2,11 +2,15 @@ import {Window} from './Window.js';
 import {Dragbar} from './Dragbar.js'
 import {VerticalDragbar} from './VerticalDragbar.js'
 import {HorizontalDragbar} from './HorizontalDragbar.js'
+import {Menu} from './Menu.js';
+import {MenuOption} from './Menu.js';
+
 
 export * from './Window.js';
 export * from './Dragbar.js'
 export * from './VerticalDragbar.js'
 export * from './HorizontalDragbar.js'
+
 
 
 export class Master{
@@ -87,8 +91,8 @@ export class Master{
 	}
 
 
-	addMenuOption(name){
-		this.menuOptions.add(name);
+	addMenuOption(name, callback){
+		this.menuOptions.add(new MenuOption(name, callback));
 		this.windows.forEach(element => element.updateMenu());
 	}
 

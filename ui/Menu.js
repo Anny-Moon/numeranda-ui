@@ -1,6 +1,7 @@
 import {Master} from './Master.js';
 import {Window} from './Window.js';
 
+
 export class Menu{
 	constructor(owner){
 		this.owner = owner;
@@ -88,9 +89,20 @@ export class Menu{
 		// add new
 		this.master.menuOptions.forEach(element => {
 			var tmp = document.createElement("li")
-			tmp.appendChild(document.createTextNode(element));
+			tmp.appendChild(document.createTextNode(element.name));
+			//$(tmp).click(function(){alert("clicked");})
+			$(tmp).click(function(){element.callback(self.owner.id);})
+
 			self.menuOptions.add(self.menuList.appendChild(tmp));
+
 		})
 	}
 
+}
+
+export class MenuOption{
+	constructor(name, callback){
+		this.name = name;
+		this.callback = callback;
+	}
 }
