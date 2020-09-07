@@ -27,6 +27,9 @@ export class Window{
 		this.master.pushWindow(this);
 
 		this.button = new Menu(this);
+		this.updateMenu();
+
+		this.childWindow = this.createChildWindow();
 		
 	}
 
@@ -216,6 +219,15 @@ export class Window{
 
 	updateMenu(){
 		this.button.update();
+	}
+
+	createChildWindow(){
+		var div = document.createElement("div");
+		div.id = this.id + "-area";
+		
+		//console.log("The new " + id + " was created!")
+		return this.window.appendChild(div);
+		
 	}
 
 }

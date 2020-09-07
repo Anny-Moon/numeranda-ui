@@ -48,6 +48,14 @@
 		function createPlotter(parentId){
 			$('#' + parentId).html("<h2> Plotte the best </h2>");
 		}
+
+		function createEditor(parentId){
+			$('#' + parentId).html("<h1> Editor super puper </h1>");
+		}
+
+		function createConsole(parentId){
+			$('#' + parentId).html("<div style='background-color:black; width: 100%; height:100%; position:absolute;'> <h1>Console super puper </h1><div>");
+		}
 	</script>
 
 	<script type="module">
@@ -102,10 +110,8 @@
 		window.onload = function(){ console.log("........loaded");master.makeLayout();}
 		
 		master.addMenuOption("Plotter", createPlotter)
-		master.addMenuOption("Editor")
-		master.addMenuOption("Console")
-		master.addMenuOption("Console Super")
-		
+		master.addMenuOption("Editor", createEditor)
+		master.addMenuOption("Console", createConsole)		
 		//master.makeLayout();
 
 

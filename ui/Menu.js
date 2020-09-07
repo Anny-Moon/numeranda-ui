@@ -69,7 +69,7 @@ export class Menu{
   		$(this.menu).hover(function(){
     	
   		}, function(){
-    		$(this).stop().slideUp(100);
+    		$(self.menu).stop().slideUp(100);
   		});
 
 
@@ -91,7 +91,10 @@ export class Menu{
 			var tmp = document.createElement("li")
 			tmp.appendChild(document.createTextNode(element.name));
 			//$(tmp).click(function(){alert("clicked");})
-			$(tmp).click(function(){element.callback(self.owner.id);})
+			$(tmp).click(function(){
+				element.callback(self.owner.childWindow.id);
+				$(self.menu).stop().slideUp(20);
+			})
 
 			self.menuOptions.add(self.menuList.appendChild(tmp));
 
