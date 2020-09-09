@@ -152,10 +152,18 @@ export class Window{
 		this.window.style.top = top + "px";
 		this.window.style.height = height + "px";
 		*/
+
 		this.window.style.left = left + "%";
 		this.window.style.width = width + "%";
 		this.window.style.top = top + "%";
 		this.window.style.height = height + "%";
+
+		if(Master.getPositionPx(this.window).height < 50 || Master.getPositionPx(this.window).width < 50)
+			this.button.hide(true);
+
+		else
+			this.button.hide(false);
+
 		// for Safari
 		this.window.style.position = "absolute";
 
@@ -228,6 +236,14 @@ export class Window{
 		//console.log("The new " + id + " was created!")
 		return this.window.appendChild(div);
 		
+	}
+
+	hideButton(){
+		this.button.hide(true)
+	}
+
+	showButton(){
+		this.button.hide(false);
 	}
 
 }

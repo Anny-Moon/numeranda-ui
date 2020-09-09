@@ -15,15 +15,28 @@ export class Menu{
 		//self.menu.style.top = "500px"
 		this.makeMenu();
 		this.menuOptions = new Set();
+		this.isHidden = false;
 	}
 
+
+	hide(flag){
+		if(flag){
+			this.isHidden = true;
+			this.button.style.visibility = "hidden";
+		}
+
+		else{
+			this.isHidden = false;
+			this.button.style.visibility = "visible";
+		}
+	}
 
 	makeButtonClickable(){
 		var self = this;
 
 		$(this.button)
 			.button({
-  				icon: "ui-icon-caret-1-s"
+  				icon: "ui-icon-caret-1-n"
 			});
 			
 
@@ -35,7 +48,6 @@ export class Menu{
 
             $(self.menu).slideDown(100);
         	});
-
         	
 	}
 

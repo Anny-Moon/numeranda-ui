@@ -231,6 +231,7 @@ export class VerticalDragbar extends Dragbar{
 			wnd.bottomDragbar.addTopWindow(newWindow);
 
 		newWindow.fitTheAreaBetweenDragbars();
+		wnd.fitTheAreaBetweenDragbars();
 		newDragbar.fitToWindows();
 
 	}

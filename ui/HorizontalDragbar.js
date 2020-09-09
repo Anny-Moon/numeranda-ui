@@ -231,6 +231,7 @@ export class HorizontalDragbar extends Dragbar{
 			wnd.rightDragbar.addLeftWindow(newWindow);
 
 		newWindow.fitTheAreaBetweenDragbars();
+		wnd.fitTheAreaBetweenDragbars();
 		newDragbar.fitToWindows();
 
 	}
