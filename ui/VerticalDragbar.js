@@ -41,10 +41,20 @@ export class VerticalDragbar extends Dragbar{
 		this.dragbar.style.height = value + "px";
 	}
 
-	setPosition(left){
-		this.dragbar.style.left = left + "%";
+	setPosition({"%":left, "leftPx":leftPx, "rightPx":rightPx}){
+		if(left!=null)
+			this.dragbar.style.left = left + "%";
+
+		if(leftPx!=null)
+			this.dragbar.style.left = leftPx + "px";
+
+		if(rightPx!=null){
+			let containerPosition = this.master.container.getBoundingClientRect();
+			this.dragbar.style.left = containerPosition.width - rightPx + "px";
+		}
+
 		this.dragbar.style.top = "0%"
-		//this.dragbar.style.hight = "0%"
+		
 	}
 
 	/*fitToWindowsPx(){

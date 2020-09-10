@@ -76,10 +76,13 @@
 
 		var w2 = new ui.Window(master, "plot")
 
-		var w3 = new ui.Window(master, "console")
+		var w3 = new ui.Window(master, "fixed")
+
+		var w4 = new ui.Window(master, "console")
+	
 
 		var d1 = new ui.VerticalDragbar(master);
-		d1.setPosition(40);
+		d1.setPosition({"leftPx":100});
 
 		var d2 = new ui.HorizontalDragbar(master);
 		d2.setPosition(50);
@@ -87,21 +90,29 @@
 		d1.addLeftWindow(w1);
 		d1.addRightWindow(w2);
 
+
 		d2.addTopWindow(w1);
 		d2.addTopWindow(w2);
-		d2.addBottomWindow(w3)
+		d2.addTopWindow(w3);
+		d2.addBottomWindow(w4)
+		
+		var d3 = new ui.VerticalDragbar(master);
+		d3.lock();
+		d3.setPosition({"rightPx":100});
+		d3.addLeftWindow(w2);
+		d3.addRightWindow(w3);
 
 		//var wBorder = new ui.Window();
 		var dBorder1 = new ui.VerticalDragbar(master);
-		dBorder1.setPosition(100);
-		dBorder1.addLeftWindow(w2);
+		dBorder1.setPosition({"%":100});
 		dBorder1.addLeftWindow(w3);
+		dBorder1.addLeftWindow(w4);
 		dBorder1.lock();
 		//dBorder.addRightWindow(wBorder);
 
 		var dBorder2 = new ui.HorizontalDragbar(master);
 		dBorder2.setPosition(100);
-		dBorder2.addTopWindow(w3);
+		dBorder2.addTopWindow(w4);
 
 		dBorder2.lock();
 
