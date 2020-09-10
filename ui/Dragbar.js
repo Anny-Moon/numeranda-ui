@@ -11,19 +11,19 @@ export class Dragbar{
 		this.master.dragbarCounterPlusPlus();
 		this.master.pushDragbar(this);
 		this.isLocked = false;
+		this.isFixedPx = false;
 	}
 
-	lock(){
-		$(this.dragbar).draggable( "disable" );
-		this.isLocked = true;
+	lock(flag){
+		if(flag){
+			$(this.dragbar).draggable( "disable" );
+			this.isLocked = true;
+		}
+
+		else{
+			$(this.dragbar).draggable( "enable" );
+			this.isLocked = false;
+		}
 	};
-
-	unlock(){
-		$(this.dragbar).draggable( "enable" );
-		this.isLocked = false;
-	}
-
-	
-
 }
 
