@@ -85,7 +85,7 @@
 		d1.setPosition({"leftPx":100});
 
 		var d2 = new ui.HorizontalDragbar(master);
-		d2.setPosition(50);
+		d2.setPosition({"bottomPx":100});
 
 		d1.addLeftWindow(w1);
 		d1.addRightWindow(w2);
@@ -111,7 +111,7 @@
 		//dBorder.addRightWindow(wBorder);
 
 		var dBorder2 = new ui.HorizontalDragbar(master);
-		dBorder2.setPosition(100);
+		dBorder2.setPosition({"%":100});
 		dBorder2.addTopWindow(w4);
 
 		dBorder2.lock();

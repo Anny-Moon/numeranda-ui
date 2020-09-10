@@ -54,7 +54,6 @@ export class VerticalDragbar extends Dragbar{
 		}
 
 		this.dragbar.style.top = "0%"
-		
 	}
 
 	/*fitToWindowsPx(){

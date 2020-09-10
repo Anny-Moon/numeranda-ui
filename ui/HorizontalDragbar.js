@@ -41,10 +41,19 @@ export class HorizontalDragbar extends Dragbar{
 		this.dragbar.style.width = value + "px";
 	}
 
-	setPosition(top){
-		this.dragbar.style.top = top + "%";
+	setPosition({"%":top, "topPx":topPx, "bottomPx":bottomPx}){
+		if(top!=null)
+			this.dragbar.style.top = top + "%";
+		
+		if(topPx!=null)
+			this.dragbar.style.top = topPx + "px";
+
+		if(bottomPx!=null){
+			let containerPosition = this.master.container.getBoundingClientRect();
+			this.dragbar.style.top = containerPosition.height - bottomPx + "px";
+		}
+
 		this.dragbar.style.left = "0%"
-		//this.dragbar.style.hight = "0%"
 	}
 
 	/*fitToWindowsPx(){
