@@ -12,6 +12,7 @@ export class HorizontalDragbar extends Dragbar{
 		this.bottomWindow = new Set();
 		this.makeDraggable();
 		this.makeDoubleClickable();
+		this.bottomPx = 0;
 	}
 
 	addTopWindow(div){
@@ -46,14 +47,17 @@ export class HorizontalDragbar extends Dragbar{
 			this.dragbar.style.top = top + "%";
 		
 		if(topPx!=null){
-			this.isFixedPx = true;
+			let containerPosition = this.master.container.getBoundingClientRect();
+			//let top= topPx /containerPosition.height * 100;
+			//this.dragbar.style.top = top + "%";
 			this.dragbar.style.top = topPx + "px";
 		}
 
 		if(bottomPx!=null){
-			this.isFixedPx = true;
+			this.bottomPx = bottomPx;
 			let containerPosition = this.master.container.getBoundingClientRect();
-			this.dragbar.style.top = containerPosition.height - bottomPx + "px";
+			let top = (containerPosition.height - bottomPx)/containerPosition.height * 100
+			this.dragbar.style.top = top + "%";
 		}
 
 		this.dragbar.style.left = "0%"
@@ -123,6 +127,49 @@ export class HorizontalDragbar extends Dragbar{
 			catch{
 				console.log("It was dead when I came. I swear!")
 			}
+		}
+
+		// for Safari
+		this.dragbar.style.position = "absolute";
+	}
+
+	fitToWindowsRescale(){
+
+		var s = new Set([...this.topWindow, ...this.bottomWindow])
+		var a = Array.from(s);
+
+		var leftMin = this.master.getPosition(a[0].window).left;
+
+		for (var i=1; i<a.length; i++){
+  			if(leftMin > this.master.getPosition(a[i].window).left)
+  				leftMin = this.master.getPosition(a[i].window).left;
+		};
+
+		this.dragbar.style.left = leftMin + "%";
+
+		var rightMax = this.master.getPosition(a[0].window).right;
+		for (var i=1; i<a.length; i++){
+  			if(rightMax < this.master.getPosition(a[i].window).right)
+  				rightMax = this.master.getPosition(a[i].window).right;
+		};
+		
+		this.dragbar.style.width = (rightMax - this.master.getPosition(this.dragbar).left) + "%";
+
+		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).width<this.master.MIN_WIDTH){
+			try{
+				console.log(this.id + " became too thin, so will be deleted.")
+				this.master.removeDiv(this.id);
+			}
+
+			catch{
+				console.log("It was dead when I came. I swear!")
+			}
+		}
+
+		if(this.bottomPx!=0){
+			let containerPosition = this.master.container.getBoundingClientRect();
+			let top = (containerPosition.height - this.bottomPx)/containerPosition.height * 100;
+			this.dragbar.style.top = top + "%";
 		}
 
 		// for Safari

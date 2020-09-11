@@ -37,7 +37,10 @@ export class Master{
 	}
 
 	onResize(){
-		this.makeLayout();
+		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
+		this.dragbars.forEach(element => element.fitToWindowsRescale());
+		// in case of very fast resize of the browser
+		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
 	}
 
 	setContainer(id){

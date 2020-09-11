@@ -12,6 +12,7 @@ export class VerticalDragbar extends Dragbar{
 		this.rightWindow = new Set();
 		this.makeDraggable();
 		this.makeDoubleClickable();
+		this.rightPx=0;
 	}
 
 	addLeftWindow(div){
@@ -45,12 +46,18 @@ export class VerticalDragbar extends Dragbar{
 		if(left!=null)
 			this.dragbar.style.left = left + "%";
 
-		if(leftPx!=null)
+		if(leftPx!=null){
+			let containerPosition = this.master.container.getBoundingClientRect();
+			//let left = leftPx/containerPosition.width * 100;
+			//this.dragbar.style.left = left + "%";
 			this.dragbar.style.left = leftPx + "px";
+		}
 
 		if(rightPx!=null){
+			this.rightPx = rightPx;
 			let containerPosition = this.master.container.getBoundingClientRect();
-			this.dragbar.style.left = containerPosition.width - rightPx + "px";
+			let left = (containerPosition.width - rightPx)/containerPosition.width * 100;
+			this.dragbar.style.left = left + "%";
 		}
 
 		this.dragbar.style.top = "0%"
@@ -121,6 +128,49 @@ export class VerticalDragbar extends Dragbar{
 				console.log("It was dead when I came. I swear!")
 			}
 		} 
+
+		// for Safari
+		this.dragbar.style.position = "absolute";
+	}
+
+	fitToWindowsRescale(){
+
+		var s = new Set([...this.leftWindow, ...this.rightWindow])
+		var a = Array.from(s);
+		
+		var topMin = this.master.getPosition(a[0].window).top;
+		
+		for (var i=1; i<a.length; i++){
+  			if(topMin > this.master.getPosition(a[i].window).top)
+  				topMin = this.master.getPosition(a[i].window).top;
+		};
+
+		this.dragbar.style.top = topMin + "%";
+
+		var bottomMax = this.master.getPosition(a[0].window).bottom;
+		for (var i=1; i<a.length; i++){
+  			if(bottomMax < this.master.getPosition(a[i].window).bottom)
+  				bottomMax = this.master.getPosition(a[i].window).bottom;
+		};
+		
+		this.dragbar.style.height = (bottomMax - this.master.getPosition(this.dragbar).top) + "%";
+		
+		if(!this.master.getIfSomeAction() && this.master.getPosition(this.dragbar).height<this.master.MIN_HEIGHT){
+			try{
+				console.log(this.id + " became too thin, so will be deleted.")
+				this.master.removeDiv(this.id);
+			}
+
+			catch{
+				console.log("It was dead when I came. I swear!")
+			}
+		} 
+
+		if(this.rightPx!=0){
+			let containerPosition = this.master.container.getBoundingClientRect();
+			let left = (containerPosition.width - this.rightPx)/containerPosition.width * 100;
+			this.dragbar.style.left = left + "%";
+		}
 
 		// for Safari
 		this.dragbar.style.position = "absolute";

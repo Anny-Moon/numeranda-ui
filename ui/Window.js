@@ -170,6 +170,70 @@ export class Window{
 
 	}
 
+	// not used
+	fitTheAreaBetweenDragbarsRescale(){
+		var top = 0;
+		var left = 0;
+		//var height = Master.getPositionPx(this.master.container).height;
+		//var width = Master.getPositionPx(this.master.container).width;
+
+		var height = this.master.getPosition(this.master.container).height;
+		var width = this.master.getPosition(this.master.container).width;		
+		
+		if(this.topDragbar!=null){
+			
+			if(this.topDragbar.bottomPx!=0){
+
+				let containerPosition = this.master.container.getBoundingClientRect();
+				top = (containerPosition.height - this.topDragbar.bottomPx)/containerPosition.height * 100;
+			}
+
+			else{
+				top = this.master.getPosition(this.topDragbar.dragbar).top;	
+			}
+			this.window.style.top = top + "%";
+			height = height - top;
+		}
+
+		if(this.bottomDragbar!=null){
+			//height = Master.getPositionPx(this.bottomDragbar.dragbar).top - top;
+			height = this.master.getPosition(this.bottomDragbar.dragbar).top - top;
+		}
+
+		if(this.leftDragbar!=null){
+			//left = Master.getPositionPx(this.leftDragbar.dragbar).left
+			left = this.master.getPosition(this.leftDragbar.dragbar).left
+			width = width - left;
+		}
+
+		if(this.rightDragbar!=null){
+			width = this.master.getPosition(this.rightDragbar.dragbar).left - left;
+			//width = Master.getPositionPx(this.rightDragbar.dragbar).left - left;
+		}
+		/*
+		this.window.style.left = left + "px";
+		this.window.style.width = width + "px";
+		this.window.style.top = top + "px";
+		this.window.style.height = height + "px";
+		*/
+
+		this.window.style.left = left + "%";
+		this.window.style.width = width + "%";
+		
+		this.window.style.height = height + "%";
+
+		if(Master.getPositionPx(this.window).height < 50 || Master.getPositionPx(this.window).width < 50)
+			this.button.hide(true);
+
+		else
+			this.button.hide(false);
+
+		// for Safari
+		this.window.style.position = "absolute";
+
+
+	}
+
 	resize(){
 		this.fitTheAreaBetweenDragbars();
 		if(this.bottomDragbar!=null){
