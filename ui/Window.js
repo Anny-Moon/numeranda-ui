@@ -13,8 +13,8 @@ export class Window{
 		this.window = this.master.createDiv(id, extraClasses);
 		this.rightNeighbor = [];
 		this.bottomNeighbor = null;
-		const color = Math.floor(Math.random()*16777215).toString(16);
-		this.window.style.background = "#" + color;
+		//const color = Math.floor(Math.random()*16777215).toString(16);
+		//this.window.style.background = "#" + color;
 		this.window.style.width = "100%";
 		this.window.style.height = "100%";
 

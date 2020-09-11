@@ -11,24 +11,10 @@
 	<link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-	<link rel="stylesheet" type="text/css" href="ui/stylesheet.css" />
+	<link rel="stylesheet" type="text/css" href="ui/numeranda-ui.css" />
 	</head>
 	<body>
 
-	<div id="menu">
-		  <ul>
-		    <li><a href="#">Link One</a></li>
-		    <li><a href="#">Link Two</a>
-		      <ul class="dropdown-menu">
-		        <li><a href="#">Dropdown Link</a></li>
-		        <li><a href="#">Another Dropdown Link</a></li>
-		      </ul>
-		    </li>
-		  </ul>
-	</div>
-	<div id="toolbar" class="ui-widget-content"></div>
-
-	
 	<div id="containerMain" >
 		
 	</div>
@@ -97,6 +83,7 @@
 		d2.addBottomWindow(w4)
 		
 		var d3 = new ui.VerticalDragbar(master);
+		d3.lock(true);
 		d3.setPosition({"rightPx":100});
 		d3.addLeftWindow(w2);
 		d3.addRightWindow(w3);

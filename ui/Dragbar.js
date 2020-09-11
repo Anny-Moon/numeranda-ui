@@ -18,11 +18,13 @@ export class Dragbar{
 		if(flag){
 			$(this.dragbar).draggable( "disable" );
 			this.isLocked = true;
+			this.dragbar.style.cursor = "default";
 		}
 
 		else{
 			$(this.dragbar).draggable( "enable" );
 			this.isLocked = false;
+			//TODO: get back cursor style
 		}
 	};
 }
