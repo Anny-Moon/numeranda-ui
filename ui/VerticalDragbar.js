@@ -226,7 +226,7 @@ export class VerticalDragbar extends Dragbar{
 
 	splitLeftWindow(wnd){
 		var newDragbar = new VerticalDragbar(this.master);
-		newDragbar.setPosition(this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left)
+		newDragbar.setPosition({"%":this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left})
 		this.removeLeftWindow(wnd);
 
 		newDragbar.addLeftWindow(wnd);
@@ -247,7 +247,7 @@ export class VerticalDragbar extends Dragbar{
 
 	splitRightWindow(wnd){
 		var newDragbar = new VerticalDragbar(this.master);
-		newDragbar.setPosition(this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left)
+		newDragbar.setPosition({"%":this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left})
 		this.removeRightWindow(wnd);
 
 		newDragbar.addRightWindow(wnd);

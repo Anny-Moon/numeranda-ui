@@ -46,13 +46,11 @@ export class HorizontalDragbar extends Dragbar{
 			this.dragbar.style.top = top + "%";
 		
 		if(topPx!=null){
-			this.lock(true);
 			this.isFixedPx = true;
 			this.dragbar.style.top = topPx + "px";
 		}
 
 		if(bottomPx!=null){
-			this.lock(true);
 			this.isFixedPx = true;
 			let containerPosition = this.master.container.getBoundingClientRect();
 			this.dragbar.style.top = containerPosition.height - bottomPx + "px";
@@ -231,7 +229,7 @@ export class HorizontalDragbar extends Dragbar{
 
 	splitTopWindow(wnd){
 		var newDragbar = new HorizontalDragbar(this.master);
-		newDragbar.setPosition(this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top )
+		newDragbar.setPosition({"%":this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top})
 		this.removeTopWindow(wnd);
 
 		newDragbar.addTopWindow(wnd);
@@ -252,7 +250,7 @@ export class HorizontalDragbar extends Dragbar{
 
 	splitBottomWindow(wnd){
 		var newDragbar = new HorizontalDragbar(this.master);
-		newDragbar.setPosition(this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top)
+		newDragbar.setPosition({"%":this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top})
 		this.removeBottomWindow(wnd);
 
 		newDragbar.addBottomWindow(wnd);

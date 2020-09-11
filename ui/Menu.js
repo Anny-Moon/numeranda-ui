@@ -36,7 +36,7 @@ export class Menu{
 
 		$(this.button)
 			.button({
-  				icon: "ui-icon-caret-1-n"
+  				//icon: "ui-icon-caret-1-n"
 			});
 			
 
