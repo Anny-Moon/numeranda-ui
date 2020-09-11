@@ -318,6 +318,9 @@ export class VerticalDragbar extends Dragbar{
 	splitThistWindow(wnd){
 		// TO DO
 		// set limitations on the size while can be split still
+
+		if(!wnd.isSplitAllowed)
+			return;
 		if(this.leftWindow.has(wnd)){
 			console.log("Found left " + wnd.id);
 			this.splitLeftWindow(wnd);

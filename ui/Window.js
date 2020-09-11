@@ -30,7 +30,12 @@ export class Window{
 		this.updateMenu();
 
 		this.childWindow = this.createChildWindow();
+		this.isSplitAllowed = true;
 		
+	}
+
+	allowSplit(flag){
+		this.isSplitAllowed = flag;
 	}
 
 	setRightDragbar(div){
