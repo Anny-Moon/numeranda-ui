@@ -318,6 +318,10 @@ export class HorizontalDragbar extends Dragbar{
 	splitThistWindow(wnd){
 		// TO DO
 		// set limitations on the size while can be split still
+
+		if(!wnd.isSplitAllowed)
+			return;
+		
 		if(this.topWindow.has(wnd)){
 			console.log("found top " + wnd.id);
 			this.splitTopWindow(wnd);
