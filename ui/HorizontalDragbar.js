@@ -46,13 +46,13 @@ export class HorizontalDragbar extends Dragbar{
 			this.dragbar.style.top = top + "%";
 		
 		if(topPx!=null){
-			this.lock(true)
+			this.lock(true);
 			this.isFixedPx = true;
 			this.dragbar.style.top = topPx + "px";
 		}
 
 		if(bottomPx!=null){
-			this.lock(true)
+			this.lock(true);
 			this.isFixedPx = true;
 			let containerPosition = this.master.container.getBoundingClientRect();
 			this.dragbar.style.top = containerPosition.height - bottomPx + "px";

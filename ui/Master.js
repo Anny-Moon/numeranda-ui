@@ -31,6 +31,13 @@ export class Master{
 
 		this.menuOptions = new Set();
 
+		var self = this;
+		window.addEventListener('resize', function(){self.onResize()}, true);
+
+	}
+
+	onResize(){
+		this.makeLayout();
 	}
 
 	setContainer(id){
