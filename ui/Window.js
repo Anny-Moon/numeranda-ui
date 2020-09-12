@@ -9,8 +9,8 @@ export class Window{
 		}
 		if(extraClasses == "" || extraClasses == null)
 			extraClasses = "standardWindow";
-		this.id = id;
-		this.window = this.master.createDiv(id, extraClasses);
+		this.id = id + "_container";
+		this.window = this.master.createDiv(this.id, extraClasses);
 		this.rightNeighbor = [];
 		this.bottomNeighbor = null;
 		//const color = Math.floor(Math.random()*16777215).toString(16);
@@ -29,7 +29,7 @@ export class Window{
 		this.button = new Menu(this);
 		this.updateMenu();
 
-		this.childWindow = this.createChildWindow();
+		this.childWindow = this.createChildWindow(id);
 		this.isSplitAllowed = true;
 		
 	}
@@ -298,9 +298,9 @@ export class Window{
 		this.button.update();
 	}
 
-	createChildWindow(){
+	createChildWindow(id){
 		var div = document.createElement("div");
-		div.id = this.id + "-area";
+		div.id = id;
 		
 		//console.log("The new " + id + " was created!")
 		return this.window.appendChild(div);

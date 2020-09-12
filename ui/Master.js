@@ -41,6 +41,8 @@ export class Master{
 		this.dragbars.forEach(element => element.fitToWindowsRescale());
 		// in case of very fast resize of the browser
 		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
+		// in case of step change of the size
+		this.dragbars.forEach(element => element.fitToWindowsRescale());
 	}
 
 	setContainer(id){
