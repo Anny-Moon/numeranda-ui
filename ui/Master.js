@@ -36,17 +36,26 @@ export class Master{
 
 	}
 
-	createDragbar({type:type, id:id}){
+	createDragbar({type:type, 
+					id:id,
+					lock:flag=false,
+					left:left, right:right,
+					top:top, bottom:bottom
+
+				}){
 		var object;
 
 		if(type=="vertical"){
 			object = new VerticalDragbar(this, id);
+			object.setPosition({left:left,right:right});
 		}
 
 		if(type=="horizontal"){
 			object = new HorizontalDragbar(this, id);
+			object.setPosition({top:top,bottom:bottom});
 		}
 
+		object.lock(flag);
 		this.dragbarCounterPlusPlus();
 		this.pushDragbar(object);
 

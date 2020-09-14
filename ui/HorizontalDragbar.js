@@ -42,7 +42,7 @@ export class HorizontalDragbar extends Dragbar{
 		this.dragbar.style.width = value + "px";
 	}
 
-	setPosition({"top":top, "bottom":bottom, "topPx":topPx, "bottomPx":bottomPx}){
+	setPosition({top:top, bottom:bottom}){
 		if(top!=null)
 			this.dragbar.style.top = top ;
 		

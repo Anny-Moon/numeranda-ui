@@ -8,8 +8,6 @@ export class Dragbar{
 		}
 		this.id = id;
 		this.dragbar = this.master.createDiv(id, extraClasses);
-		//this.master.dragbarCounterPlusPlus();
-		//this.master.pushDragbar(this);
 		this.isLocked = false;
 		this.isFixedPx = false;
 	}
