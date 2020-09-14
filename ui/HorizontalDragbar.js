@@ -42,22 +42,23 @@ export class HorizontalDragbar extends Dragbar{
 		this.dragbar.style.width = value + "px";
 	}
 
-	setPosition({"%":top, "topPx":topPx, "bottomPx":bottomPx}){
+	setPosition({"top":top, "bottom":bottom, "topPx":topPx, "bottomPx":bottomPx}){
 		if(top!=null)
-			this.dragbar.style.top = top + "%";
+			this.dragbar.style.top = top ;
 		
-		if(topPx!=null){
-			let containerPosition = this.master.container.getBoundingClientRect();
-			//let top= topPx /containerPosition.height * 100;
-			//this.dragbar.style.top = top + "%";
-			this.dragbar.style.top = topPx + "px";
-		}
 
-		if(bottomPx!=null){
-			this.bottomPx = bottomPx;
-			let containerPosition = this.master.container.getBoundingClientRect();
-			let top = (containerPosition.height - bottomPx)/containerPosition.height * 100
-			this.dragbar.style.top = top + "%";
+		if(bottom!=null){
+
+			if(bottom.charAt(bottom.length-1)=="%"){
+				this.dragbar.style.top = 100-bottom;
+			}
+
+			else if(bottom.charAt(bottom.length-1)=="x"){
+				this.bottomPx = bottom.substring(0, bottom.length - 2);
+				let containerPosition = this.master.container.getBoundingClientRect();
+				let top = (containerPosition.height - this.bottomPx)/containerPosition.height * 100
+				this.dragbar.style.top = top + "%";
+			}
 		}
 
 		this.dragbar.style.left = "0%"
@@ -275,8 +276,10 @@ export class HorizontalDragbar extends Dragbar{
 	}*/
 
 	splitTopWindow(wnd){
-		var newDragbar = new HorizontalDragbar(this.master);
-		newDragbar.setPosition({"%":this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top})
+		var newDragbar = this.master.createDragbar({type:"horizontal"});
+		const position = this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top;
+		newDragbar.setPosition({"top":position + "%"})
+		
 		this.removeTopWindow(wnd);
 
 		newDragbar.addTopWindow(wnd);
@@ -296,8 +299,10 @@ export class HorizontalDragbar extends Dragbar{
 	}
 
 	splitBottomWindow(wnd){
-		var newDragbar = new HorizontalDragbar(this.master);
-		newDragbar.setPosition({"%":this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top})
+		var newDragbar = this.master.createDragbar({type:"horizontal"});
+		const position = this.master.getPosition(wnd.window).height/2 + this.master.getPosition(wnd.window).top;
+		newDragbar.setPosition({"top":position + "%"})
+		
 		this.removeBottomWindow(wnd);
 
 		newDragbar.addBottomWindow(wnd);

@@ -43,15 +43,11 @@ export class VerticalDragbar extends Dragbar{
 	}
 
 	setPosition({"left":left, "right":right, "leftPx":leftPx, "rightPx":rightPx}){
-
-
-
 		if(left!=null){
 			this.dragbar.style.left = left;
 		}
 
 		if(right!=null){
-
 
 			if(right.charAt(right.length-1)=="%"){
 				this.dragbar.style.left = 100-right;
