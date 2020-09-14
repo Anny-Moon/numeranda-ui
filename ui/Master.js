@@ -36,6 +36,23 @@ export class Master{
 
 	}
 
+	createDragbar({type:type, id:id}){
+		var object;
+
+		if(type=="vertical"){
+			object = new VerticalDragbar(this, id);
+		}
+
+		if(type=="horizontal"){
+			object = new HorizontalDragbar(this, id);
+		}
+
+		this.dragbarCounterPlusPlus();
+		this.pushDragbar(object);
+
+		return object;
+	}
+
 	onResize(){
 		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
 		this.dragbars.forEach(element => element.fitToWindowsRescale());

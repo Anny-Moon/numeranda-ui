@@ -67,10 +67,11 @@
 		var w4 = new ui.Window(master, "console")
 	
 
-		var d1 = new ui.VerticalDragbar(master);
-		d1.setPosition({"leftPx":100});
+		//var d1 = new ui.VerticalDragbar(master);
+		var d1 = master.createDragbar({type: "vertical"})
+		d1.setPosition({"left":"100px"});
 
-		var d2 = new ui.HorizontalDragbar(master);
+		var d2 = master.createDragbar({type: "horizontal"})
 		d2.setPosition({"bottomPx":100});
 
 		d1.addLeftWindow(w1);
@@ -82,26 +83,26 @@
 		d2.addTopWindow(w3);
 		d2.addBottomWindow(w4)
 		
-		var d3 = new ui.VerticalDragbar(master);
+		var d3 = master.createDragbar({type: "vertical"})
 		d3.lock(true);
 		w3.allowSplit(false);
-		d3.setPosition({"rightPx":100});
+		d3.setPosition({"right":"100px"});
 		d3.addLeftWindow(w2);
 		d3.addRightWindow(w3);
 
 		//var wBorder = new ui.Window();
-		var dBorder1 = new ui.VerticalDragbar(master);
-		dBorder1.setPosition({"%":100});
+		var dBorder1 = master.createDragbar({type: "vertical"})
+		dBorder1.setPosition({"left":"100%"});
 		dBorder1.addLeftWindow(w3);
 		dBorder1.addLeftWindow(w4);
-		dBorder1.lock();
+		dBorder1.lock(true);
 		//dBorder.addRightWindow(wBorder);
 
-		var dBorder2 = new ui.HorizontalDragbar(master);
+		var dBorder2 = master.createDragbar({type: "horizontal"})
 		dBorder2.setPosition({"%":100});
 		dBorder2.addTopWindow(w4);
 
-		dBorder2.lock();
+		dBorder2.lock(true);
 
 
 		//Safari can run makeLayout() only after the page is loaded
