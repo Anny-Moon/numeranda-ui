@@ -13,8 +13,8 @@ export class Window{
 		this.window = this.master.createDiv(this.id, extraClasses);
 		this.rightNeighbor = [];
 		this.bottomNeighbor = null;
-		//const color = Math.floor(Math.random()*16777215).toString(16);
-		//this.window.style.background = "#" + color;
+		const color = Math.floor(Math.random()*16777215).toString(16);
+		this.window.style.background = "#" + color;
 		this.window.style.width = "100%";
 		this.window.style.height = "100%";
 
@@ -27,6 +27,7 @@ export class Window{
 		this.master.pushWindow(this);
 
 		this.button = new Menu(this);
+		this.ifShowButton = true;
 		this.updateMenu();
 
 		this.childWindow = this.createChildWindow(id);
@@ -65,7 +66,10 @@ export class Window{
 		if (Master.getPositionPx(this.window).width<this.master.MIN_WIDTH){
 			if(this.leftDragbar!=null){
 				this.leftDragbar.newRightWindows(owner);
-				this.leftDragbar.newLeftWindows(owner);
+				if(owner.leftWindow.has(this.window)){
+					this.leftDragbar.newLeftWindows(owner);
+				}
+				
 			}
 
 			if(this.rightDragbar!=null){
@@ -164,10 +168,10 @@ export class Window{
 		this.window.style.height = height + "%";
 
 		if(Master.getPositionPx(this.window).height < 50 || Master.getPositionPx(this.window).width < 50)
-			this.button.hide(true);
+			this.button.show(false);
 
 		else
-			this.button.hide(false);
+			this.button.show(this.ifShowButton);
 
 		// for Safari
 		this.window.style.position = "absolute";
@@ -228,10 +232,10 @@ export class Window{
 		this.window.style.height = height + "%";
 
 		if(Master.getPositionPx(this.window).height < 50 || Master.getPositionPx(this.window).width < 50)
-			this.button.hide(true);
+			this.button.show(false);
 
 		else
-			this.button.hide(false);
+			this.button.show(true);
 
 		// for Safari
 		this.window.style.position = "absolute";
@@ -307,12 +311,9 @@ export class Window{
 		
 	}
 
-	hideButton(){
-		this.button.hide(true)
-	}
-
-	showButton(){
-		this.button.hide(false);
+	showButton(flag){
+		this.button.show(flag);
+		this.ifShowButton = flag;
 	}
 
 }

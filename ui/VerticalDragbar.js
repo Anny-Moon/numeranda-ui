@@ -241,15 +241,41 @@ export class VerticalDragbar extends Dragbar{
 		this.dragbar.style.left = this.master.getPosition(this.dragbar).left + "%";
 
 		var ifKillMyself = false;
-
+		
+		var leftDragbars = new Set();
 		this.leftWindow.forEach(function (item) {
-  			ifKillMyself += item.ifToBeRemovedByVerticalDragbar(self);
+			const leftDragbar = item.leftDragbar;
+  			const flag = item.ifToBeRemovedByVerticalDragbar(self);
+  			if(flag===true && leftDragbar!=null){
+  				leftDragbars.add(leftDragbar);
+  			}
+  			ifKillMyself += flag;
 		});
 
+		if(leftDragbars.size>1){;
+			var array = Array.from(leftDragbars);
+			for(let i=1; i<array.length; i++){
+				array[i].leftWindow.forEach(element=> array[0].addLeftWindow(element))
+				array[i].rightWindow.forEach(element=> array[0].addRightWindow(element))
+				console.log(" ////////////////////I deleted: " +  array[i].id)
+				this.master.removeDiv(array[i].id);
+
+			}
+			//this.master.makeLayout();
+		}
+
+		//console.log("ifKillMyself" + windowToDie.length);
+
+		/*
 		this.rightWindow.forEach(function (item) {
-  			ifKillMyself += item.ifToBeRemovedByVerticalDragbar(self);
+  			const flag = item.ifToBeRemovedByVerticalDragbar(self);
+  			if(flag===true){
+  				
+  			}
+  			ifKillMyself += flag;
 		});
-
+*/
+		
 		if (ifKillMyself!=0)
 			this.master.removeDiv(this.id);
 

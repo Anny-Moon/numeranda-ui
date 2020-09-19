@@ -19,8 +19,8 @@ export class Menu{
 	}
 
 
-	hide(flag){
-		if(flag){
+	show(flag){
+		if(!flag){
 			this.isHidden = true;
 			this.button.style.visibility = "hidden";
 		}
@@ -111,6 +111,7 @@ export class Menu{
 			self.menuOptions.add(self.menuList.appendChild(tmp));
 
 		})
+		
 	}
 
 }

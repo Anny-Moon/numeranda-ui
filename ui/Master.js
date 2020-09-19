@@ -132,6 +132,7 @@ export class Master{
 	addMenuOption(name, callback){
 		this.menuOptions.add(new MenuOption(name, callback));
 		this.windows.forEach(element => element.updateMenu());
+		//this.window.showButton = true;
 	}
 
 	getPosition(div){
