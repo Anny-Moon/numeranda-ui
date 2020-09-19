@@ -222,7 +222,8 @@ export class HorizontalDragbar extends Dragbar{
 		//this.topWindow.delete(deleteThis);
 		self = this;
 		takeFromThisDragbar.topWindow.forEach(function (item) {
-  			self.addTopWindow(item);
+			if(Master.getPositionPx(item.window).height>self.master.MIN_HEIGHT)
+  				self.addTopWindow(item);
 		});
 		this.fitToWindows();
 	}
@@ -231,7 +232,8 @@ export class HorizontalDragbar extends Dragbar{
 		//this.bottomWindow.delete(deleteThis);
 		self = this;
 		takeFromThisDragbar.bottomWindow.forEach(function (item) {
-  			self.addBottomWindow(item);
+			if(Master.getPositionPx(item.window).height>self.master.MIN_HEIGHT)
+  				self.addBottomWindow(item);
 		});
 		this.fitToWindows();
 	}
@@ -242,17 +244,54 @@ export class HorizontalDragbar extends Dragbar{
 
 		var ifKillMyself = false;
 
+		// |	|
+		//	  <-|
+		// |	|
+
+		var topDragbars = new Set();
 		this.topWindow.forEach(function (item) {
-  			ifKillMyself += item.ifToBeRemovedByHorizontalDragbar(self);
+			const topDragbar = item.topDragbar;
+  			const flag = item.ifToBeRemovedByHorizontalDragbar(self);
+  			if(flag===true && topDragbar!=null){
+  				topDragbars.add(topDragbar);
+  			}
+  			ifKillMyself += flag;
 		});
 
+		if(topDragbars.size>1){;
+			var array = Array.from(topDragbars);
+			for(let i=1; i<array.length; i++){
+				array[i].topWindow.forEach(element=> array[0].addTopWindow(element))
+				array[i].bottomWindow.forEach(element=> array[0].addBottomWindow(element))
+				this.master.removeDiv(array[i].id);
+			}
+		}
+
+		// |	|
+		// |->
+		// |	|
+
+		var bottomDragbars = new Set();
 		this.bottomWindow.forEach(function (item) {
-  			ifKillMyself += item.ifToBeRemovedByHorizontalDragbar(self);
+			const bottomDragbar = item.bottomDragbar;
+  			const flag = item.ifToBeRemovedByHorizontalDragbar(self);
+  			if(flag===true && bottomDragbar!=null){
+  				bottomDragbars.add(bottomDragbar);
+  			}
+  			ifKillMyself += flag;
 		});
-		
+
+		if(bottomDragbars.size>1){;
+			var array = Array.from(bottomDragbars);
+			for(let i=1; i<array.length; i++){
+				array[i].bottomWindow.forEach(element=> array[0].addBottomWindow(element))
+				array[i].topWindow.forEach(element=> array[0].addTopWindow(element))
+				this.master.removeDiv(array[i].id);
+			}
+		}
+
 		if (ifKillMyself!=0)
 			this.master.removeDiv(this.id);
-
 	}
 
 	/*splitTopWindowPx(wnd){

@@ -222,10 +222,9 @@ export class VerticalDragbar extends Dragbar{
 		//this.rightWindow.delete(deleteThis);
 		self = this;
 		takeFromThisDragbar.rightWindow.forEach(function (item) {
-			if(Master.getPositionPx(item.window).width>self.master.MIN_WIDTH){
-				console.log(self.id +" ~~~~ I add as right window " + item.window.id)
+			if(Master.getPositionPx(item.window).width>self.master.MIN_WIDTH)
   				self.addRightWindow(item);
-			}
+			
 		});
 		this.fitToWindows();
 	}
@@ -234,11 +233,9 @@ export class VerticalDragbar extends Dragbar{
 		//this.leftWindow.delete(deleteThis);
 		self = this;
 		takeFromThisDragbar.leftWindow.forEach(function (item) {
-			if(Master.getPositionPx(item.window).width>self.master.MIN_WIDTH){
-				console.log(self.id +" ~~~~ I add as left window " + item.window.id)
-
+			if(Master.getPositionPx(item.window).width>self.master.MIN_WIDTH)
   				self.addLeftWindow(item);
-			}
+			
 		});
 		this.fitToWindows();
 	}
@@ -268,13 +265,9 @@ export class VerticalDragbar extends Dragbar{
 			for(let i=1; i<array.length; i++){
 				array[i].leftWindow.forEach(element=> array[0].addLeftWindow(element))
 				array[i].rightWindow.forEach(element=> array[0].addRightWindow(element))
-				console.log(" ////////////////////I deleted: " +  array[i].id)
 				this.master.removeDiv(array[i].id);
-
 			}
 		}
-
-		//console.log("ifKillMyself" + windowToDie.length);
 		
 		// |	|
 		// |->
@@ -295,15 +288,12 @@ export class VerticalDragbar extends Dragbar{
 			for(let i=1; i<array.length; i++){
 				array[i].rightWindow.forEach(element=> array[0].addRightWindow(element))
 				array[i].leftWindow.forEach(element=> array[0].addLeftWindow(element))
-				console.log(" ///// /////I deleted: " +  array[i].id)
 				this.master.removeDiv(array[i].id);
-
 			}
 		}
 
 		if (ifKillMyself!=0)
 			this.master.removeDiv(this.id);
-
 	}
 
 	/*splitLeftWindowPx(wnd){
