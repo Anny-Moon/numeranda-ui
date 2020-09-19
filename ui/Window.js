@@ -64,20 +64,17 @@ export class Window{
 
 	ifToBeRemovedByVerticalDragbar(owner){
 		if (Master.getPositionPx(this.window).width<this.master.MIN_WIDTH){
-			if(this.leftDragbar!=null){
+			
+			if(this.leftDragbar!=null && this.leftDragbar!=owner){
 				this.leftDragbar.newRightWindows(owner);
-				if(owner.leftWindow.has(this.window)){
-					this.leftDragbar.newLeftWindows(owner);
-				}
-				
+				this.leftDragbar.newLeftWindows(owner);
 			}
 
-			if(this.rightDragbar!=null){
-				this.rightDragbar.newRightWindows(owner);
+			if(this.rightDragbar!=null && this.rightDragbar!=owner){
 				this.rightDragbar.newLeftWindows(owner);
+				this.rightDragbar.newRightWindows(owner);
 			}
 			
-			//this.master.removeDiv(owner.id);
 			this.sayGoodbyeToFriends();
 			console.log(this.id + " will say to kill " + owner.id);	
 			this.master.removeDiv(this.id);
