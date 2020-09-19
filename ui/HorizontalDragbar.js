@@ -239,6 +239,7 @@ export class HorizontalDragbar extends Dragbar{
 	}
 
 	onStop(){
+		var self = this;
 		//recalculate to %
 		this.dragbar.style.top = this.master.getPosition(this.dragbar).top + "%";
 

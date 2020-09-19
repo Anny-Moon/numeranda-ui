@@ -87,11 +87,11 @@ export class Window{
 	
 	ifToBeRemovedByHorizontalDragbar(owner){
 		if (Master.getPositionPx(this.window).height<this.master.MIN_HEIGHT){
-			if(this.topDragbar!=null){
+			if(this.topDragbar!=null && this.topDragbar!=owner){
 				this.topDragbar.newBottomWindows(owner);
 				this.topDragbar.newTopWindows(owner);
 			}
-			if(this.bottomDragbar!=null){
+			if(this.bottomDragbar!=null && this.bottomDragbar!=owner){
 				this.bottomDragbar.newBottomWindows(owner);
 				this.bottomDragbar.newTopWindows(owner);
 			}

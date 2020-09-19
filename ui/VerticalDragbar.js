@@ -224,7 +224,6 @@ export class VerticalDragbar extends Dragbar{
 		takeFromThisDragbar.rightWindow.forEach(function (item) {
 			if(Master.getPositionPx(item.window).width>self.master.MIN_WIDTH)
   				self.addRightWindow(item);
-			
 		});
 		this.fitToWindows();
 	}
@@ -235,12 +234,12 @@ export class VerticalDragbar extends Dragbar{
 		takeFromThisDragbar.leftWindow.forEach(function (item) {
 			if(Master.getPositionPx(item.window).width>self.master.MIN_WIDTH)
   				self.addLeftWindow(item);
-			
 		});
 		this.fitToWindows();
 	}
 
 	onStop(){
+		var self = this;
 		//recalculate to %
 		this.dragbar.style.left = this.master.getPosition(this.dragbar).left + "%";
 
