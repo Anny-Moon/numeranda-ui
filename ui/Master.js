@@ -63,12 +63,14 @@ export class Master{
 	}
 
 	createWindow({id:id = null,
-					isSplitAllow:flag=true
+					allowSplit:splitFlag=true,
+					showButton:showFlag=true
 				}){
 		var object;
 
 		object = new Window(this, id);
-		object.allowSplit(flag);
+		object.allowSplit(splitFlag);
+		object.showButton(showFlag);
 
 		this.windowCounterPlusPlus();
 		this.pushWindow(object);
