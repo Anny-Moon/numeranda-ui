@@ -33,14 +33,17 @@
 		
 		function createPlotter(parentId){
 			$('#' + parentId).html("<h2> Plotte the best </h2>");
+			return () => {return true};
 		}
 
 		function createEditor(parentId){
 			$('#' + parentId).html("<h1> Editor super puper </h1>");
+			return () => {return false};
 		}
 
 		function createConsole(parentId){
 			$('#' + parentId).html("<div style='background-color:black; width: 100%; height:100%; position:absolute;'> <h1>Console super puper </h1><div>");
+			return () => {return true};
 		}
 	</script>
 
@@ -58,13 +61,13 @@
 	 	var size = document.getElementById("containerMain").getBoundingClientRect();
 
 
-		var w1 = new ui.Window(master, "editor")
+		var w1 = master.createWindow({id:"editor"});
 
-		var w2 = new ui.Window(master, "plot")
+		var w2 = master.createWindow({id:"plot"});
 
-		var w3 = new ui.Window(master, "fixed")
+		var w3 = master.createWindow({id:"fixed", isSplitAllow:false});
 
-		var w4 = new ui.Window(master, "console")
+		var w4 = master.createWindow({});
 	
 
 		var d1 = master.createDragbar({type: "vertical", left:"100px"})
@@ -80,7 +83,7 @@
 		d2.addBottomWindow(w4)
 		
 		var d3 = master.createDragbar({type: "vertical", lock: false, right:"100px"})
-		w3.allowSplit(false);
+	
 
 		d3.addLeftWindow(w2);
 		d3.addRightWindow(w3);

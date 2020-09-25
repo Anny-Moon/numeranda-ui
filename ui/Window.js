@@ -22,16 +22,15 @@ export class Window{
 		this.rightDragbar = null;
 		this.topDragbar = null;
 		this.bottomDragbar = null;
-		this.master.windowCounterPlusPlus();
-
-		this.master.pushWindow(this);
-
+		
 		this.button = new Menu(this);
 		this.ifShowButton = true;
 		this.updateMenu();
 
 		this.childWindow = this.createChildWindow(id);
 		this.isSplitAllowed = true;
+
+		this.distructionCallback = null;
 		
 	}
 

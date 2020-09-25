@@ -324,7 +324,7 @@ export class VerticalDragbar extends Dragbar{
 
 		newDragbar.addLeftWindow(wnd);
 
-		var newWindow = new Window(this.master);
+		var newWindow = this.master.createWindow({});
 		this.addLeftWindow(newWindow);
 		newDragbar.addRightWindow(newWindow);
 		if(wnd.topDragbar!=null)
@@ -347,7 +347,7 @@ export class VerticalDragbar extends Dragbar{
 
 		newDragbar.addRightWindow(wnd);
 
-		var newWindow = new Window(this.master);
+		var newWindow = this.master.createWindow({});
 		this.addRightWindow(newWindow);
 		newDragbar.addLeftWindow(newWindow);
 		if(wnd.topDragbar!=null)

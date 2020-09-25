@@ -100,12 +100,23 @@ export class Menu{
 		
 		// add new
 		this.master.menuOptions.forEach(element => {
+			var self = this;
 			var tmp = document.createElement("li")
 			tmp.appendChild(document.createTextNode(element.name));
 			//$(tmp).click(function(){alert("clicked");})
 			$(tmp).click(function(){
-				element.callback(self.owner.childWindow.id);
+				if(self.owner.distructionCallback == null)
+					self.owner.distructionCallback = element.callback(self.owner.childWindow.id);
+				else{
+					if(self.owner.distructionCallback())
+						self.owner.distructionCallback = element.callback(self.owner.childWindow.id);
+						
+
+					}
+
+
 				$(self.menu).stop().slideUp(20);
+				
 			})
 
 			self.menuOptions.add(self.menuList.appendChild(tmp));
@@ -120,5 +131,6 @@ export class MenuOption{
 	constructor(name, callback){
 		this.name = name;
 		this.callback = callback;
+		
 	}
 }

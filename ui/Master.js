@@ -62,6 +62,20 @@ export class Master{
 		return object;
 	}
 
+	createWindow({id:id = null,
+					isSplitAllow:flag=true
+				}){
+		var object;
+
+		object = new Window(this, id);
+		object.allowSplit(flag);
+
+		this.windowCounterPlusPlus();
+		this.pushWindow(object);
+
+		return object;
+	}
+
 	onResize(){
 		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
 		this.dragbars.forEach(element => element.fitToWindowsRescale());
