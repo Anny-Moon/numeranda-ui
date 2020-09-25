@@ -15,17 +15,33 @@ export class HorizontalDragbar extends Dragbar{
 		this.bottomPx = 0;
 	}
 
-	addTopWindow(div){
+	addOneTopWindow(div){
 		this.topWindow.add(div);
 		div.setHeight(this.master.getPosition(this.dragbar).top);
 		div.setBottomDragbar(this);
 		
 	}
+	addTopWindow(div){
+		var self = this;
+		if(Array.isArray(div))
+			div.forEach(element => self.addOneTopWindow(element));
 
-	addBottomWindow(div){
+		else
+			self.addOneTopWindow(div);
+	}
+
+	addOneBottomWindow(div){
 		this.bottomWindow.add(div);
 		div.setTop(this.master.getPosition(this.dragbar).top);
 		div.setTopDragbar(this);
+	}
+	addBottomWindow(div){
+		var self = this;
+		if(Array.isArray(div))
+			div.forEach(element => self.addOneBottomWindow(element));
+
+		else
+			self.addOneBottomWindow(div);
 	}
 
 	removeTopWindow(div){

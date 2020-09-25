@@ -15,17 +15,34 @@ export class VerticalDragbar extends Dragbar{
 		this.rightPx=0;
 	}
 
-	addLeftWindow(div){
+
+	addOneLeftWindow(div){
 		this.leftWindow.add(div);
 		div.setWidth(this.master.getPosition(this.dragbar).left);
 		div.setRightDragbar(this);
 		
 	}
+	addLeftWindow(div){
+		var self = this;
+		if(Array.isArray(div))
+			div.forEach(element => self.addLeftWindow(element));
 
-	addRightWindow(div){
+		else
+			self.addOneLeftWindow(div);
+	}
+
+	addOneRightWindow(div){
 		this.rightWindow.add(div);
 		div.setLeft(this.master.getPosition(this.dragbar).left);
 		div.setLeftDragbar(this);
+	}
+	addRightWindow(div){
+		var self = this;
+		if(Array.isArray(div))
+			div.forEach(element => self.addOneRightWindow(element));
+
+		else
+			self.addOneRightWindow(div);
 	}
 
 	removeRightWindow(div){
