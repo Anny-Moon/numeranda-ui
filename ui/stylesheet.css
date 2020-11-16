@@ -1,123 +1,26 @@
-#container {
-	background-color: #f1f1f1;
-	width: 100%;
-	overflow: auto;
-	position: absolute;
-	top: 100px;
-	left: 8px;
-	height: 300px;
-
-}
-
 #containerMain {
 	position: absolute;
 	background-color: #f1f1f1;
-	width: 90%;
-	top: 10%;
+	width: 80%;
+	top: 0%;
 	left: 10%;
-	height: 50%;
-	overflow: auto;
+	height: 90%;
+	overflow: hidden;
 
 }
 
-
-#toolbar {
+.ActionBar {
 	position: absolute;
 	width: 100%;
-	background: black;
-	height: 50px;
+
 }
 
-.standardWindow {
+#fileExplorer {
+	position: absolute;
+	overflow: auto;
+}
+
+#editor {
 	position: absolute;
 }
 
-.standardVerticalDragbar {
-	position: absolute;
-	transform: translate(-50%, 0);
-	top: 0;
-	cursor: col-resize;
-	z-index: 5;
-	padding: 0px;
-	width: 6px;
-	background-color: black;
-	border: 0;
-}
-
-.standardHorizontalDragbar {
-	position: absolute;
-	transform: translate(0%, -50%);
-	top: 0;
-	cursor: row-resize;
-	z-index: 5;
-	padding: 0px;
-	height: 6px;
-	background-color: black;
-	border: 0;
-}
-
-.menuButton{
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-	height: 10px;
-	width: 10px;
-	padding: 4px;
-	border: 0;
-	background-color: black;
-	z-index: 5;
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-	opacity: 0.3;
-
-}
-
-.menuButton:hover{
-	opacity: 1.0;
-	border: 0;
-	background-color: black;
-}
-
-.menu{
-	/*visibility: hidden;*/
-	background-color: gold;
-	position: absolute;
-	right: 1%;
-	bottom: 1%;
-	z-index: 6;
-	padding: 5px;
-
-}
-
-.menu ul{
-	list-style-type: none;
-	margin-block-start: 0em;
-    margin-block-end: 0em;
-	padding-inline-start: 0px;
-}
-
-.menu ul li{
-}
-
-.menu ul li:hover{
-	cursor: pointer;
-	background-color: coral;
-}
-/*
-#menu a{
- text-decoration: none;
- color: #333;
- font-family: sans-serif;
- padding: 5px;
- z-index: 5;
-
-}
-#menu ul li{
- display: inline;
- z-index: 5;
-}
-.dropdown-menu{
- display: none;
- z-index: 5;
-}*/
