@@ -24,6 +24,9 @@ export class Master{
 		this.MIN_WIDTH = 5;
 		this.MIN_HEIGHT = 5;
 
+		this.HORIZONTAL_DRAGBAR_HALF_HEIGHT = 3;//px
+		this.VERTICAL_DRAGBAR_HALF_WIDTH = 3;//px
+
 		this.ifSomeAction = false;
 
 		this.dragbarCounter = 1;
@@ -51,9 +54,19 @@ export class Master{
 		}
 
 		if(type=="horizontal"){
+			
 			object = new HorizontalDragbar(this, id);
 			object.setPosition({top:top,bottom:bottom});
 		}
+		
+		if(left!=null && left.slice(-1)=="x")
+				object.isFixedPx = true;
+		if(top!=null && top.slice(-1)=="x")
+				object.isFixedPx = true;
+		if(right!=null && right.slice(-1)=="x")
+				object.isFixedPx = true;
+		if(bottom!=null && bottom.slice(-1)=="x")
+				object.isFixedPx = true;
 
 		object.lock(flag);
 		this.dragbarCounterPlusPlus();
@@ -79,12 +92,15 @@ export class Master{
 	}
 
 	onResize(){
-		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
+		this.dragbars.forEach(element => element.convertToPrecentage());
+//		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
 		this.dragbars.forEach(element => element.fitToWindowsRescale());
-		// in case of very fast resize of the browser
+		// in case of very fast resize the browser
 		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
 		// in case of step change of the size
 		this.dragbars.forEach(element => element.fitToWindowsRescale());
+		//this.dragbars.forEach(element => element.convertToPx());
+		
 	}
 
 	setContainer(id){
@@ -127,6 +143,9 @@ export class Master{
 	makeLayout(){
 		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
 		this.dragbars.forEach(element => element.fitToWindows());
+		this.windows.forEach(element => element.fitTheAreaBetweenDragbars());
+		this.dragbars.forEach(element => element.fitToWindows());
+		this.dragbars.forEach(element => element.convertToPrecentage());
 	}
 
 	createDiv(id, extraClasses){
@@ -165,10 +184,18 @@ export class Master{
 
 	static getPositionPx(div){
 		//getBoundingClientRect() does not work correctly in dynamical change
-		let left = parseInt($(div).css('left'), 10)
-		let top = parseInt($(div).css('top'), 10)
+		//let left = parseInt($(div).css('left'), 10)
+		let left = parseInt(div.offsetLeft, 10);
+		
+		//let top = parseInt($(div).css('top'), 10)
+		let top = parseInt(div.offsetTop, 10);
+
 		let width = parseInt($(div).css('width'), 10)
+		//let width = parseInt(div.offsetWidth, 10);
+		
 		let height = parseInt($(div).css('height'), 10)
+		//let height = parseInt(div.offsetHeight, 10);
+
 		let right = left + width;
 		let bottom = top + height;
 		return {left:left, top:top, right: right, bottom:bottom, width:width, height:height};

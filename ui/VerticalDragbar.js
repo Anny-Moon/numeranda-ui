@@ -15,7 +15,6 @@ export class VerticalDragbar extends Dragbar{
 		this.rightPx=0;
 	}
 
-
 	addOneLeftWindow(div){
 		this.leftWindow.add(div);
 		div.setWidth(this.master.getPosition(this.dragbar).left);
@@ -59,29 +58,36 @@ export class VerticalDragbar extends Dragbar{
 		this.dragbar.style.height = value + "px";
 	}
 
-	setPosition({left:left, right:right}){
+	setPosition({left:left, right:right}){ // after this function everything is in px
+		//TODO: safari cannot call getBoundingClientRect() before loading
+		var containerPosition = this.master.container.getBoundingClientRect();
+		
 		if(left!=null){
-			this.dragbar.style.left = left;
+			if(left.charAt(left.length-1)=="x")
+				this.dragbar.style.left = left;
+			else if(left.charAt(left.length-1)=="%"){
+				let tmp = left.substring(0, left.length - 1);
+				this.dragbar.style.left = tmp * containerPosition.width / 100 + "px";
+			}
 		}
 
 		if(right!=null){
-
-			if(right.charAt(right.length-1)=="%"){
-				this.dragbar.style.left = 100-right;
-			}
-
-			else if(right.charAt(right.length-1)=="x"){
+			if(right.charAt(right.length-1)=="x"){
 				this.rightPx = right.substring(0, right.length - 2);
-				let containerPosition = this.master.container.getBoundingClientRect();
-				let left = (containerPosition.width - this.rightPx)/containerPosition.width * 100;
-				this.dragbar.style.left = left + "%";
+				let tmp =(containerPosition.width - this.rightPx)/containerPosition.width * 100;
+				this.dragbar.style.left = tmp * containerPosition.width / 100 + "px";
+			}
+			else if(right.charAt(right.length-1)=="%"){
+				let tmp = 100 - right.substring(0, right.length - 1);
+				this.dragbar.style.left = tmp * containerPosition.width / 100 + "px";
 			}
 		}
 
-		this.dragbar.style.top = "0%"
+		this.dragbar.style.top = "0px";
+		//this.convertToPrecentage();
 	}
 
-	/*fitToWindowsPx(){
+	fitToWindows(){
 
 		var s = new Set([...this.leftWindow, ...this.rightWindow])
 		var a = Array.from(s);
@@ -107,13 +113,17 @@ export class VerticalDragbar extends Dragbar{
 				this.master.removeDiv(this.id);
 			}
 
-			catch{
+			catch(error){
 				console.log("It was dead when I came. I swear!")
 			}
 		} 
 
-	}*/
-
+		this.dragbar.style.left = Master.getPositionPx(this.dragbar).left + "px";
+		
+		// for Safari
+		this.dragbar.style.position = "absolute";
+	}
+/*
 	fitToWindows(){
 
 		var s = new Set([...this.leftWindow, ...this.rightWindow])
@@ -141,8 +151,7 @@ export class VerticalDragbar extends Dragbar{
 				console.log(this.id + " became too thin, so will be deleted.")
 				this.master.removeDiv(this.id);
 			}
-
-			catch{
+			catch(error){
 				console.log("It was dead when I came. I swear!")
 			}
 		} 
@@ -150,9 +159,20 @@ export class VerticalDragbar extends Dragbar{
 		// for Safari
 		this.dragbar.style.position = "absolute";
 	}
+*/
+	convertToPrecentage(){
+		if(!this.isFixedPx)
+			this.dragbar.style.left = this.master.getPosition(this.dragbar).left + "%";
+		this.dragbar.style.top = this.master.getPosition(this.dragbar).top + "%";
+		this.dragbar.style.height = this.master.getPosition(this.dragbar).height + "%";
+	}
 
 	fitToWindowsRescale(){
-
+//		if(!this.isFixedPx)
+//			this.dragbar.style.left = this.master.getPosition(this.dragbar).left + "%";
+		//this.dragbar.style.top = this.master.getPosition(this.dragbar).top + "%";
+		//this.dragbar.style.height = this.master.getPosition(this.dragbar).height + "%";
+		
 		var s = new Set([...this.leftWindow, ...this.rightWindow])
 		var a = Array.from(s);
 		
@@ -178,8 +198,7 @@ export class VerticalDragbar extends Dragbar{
 				console.log(this.id + " became too thin, so will be deleted.")
 				this.master.removeDiv(this.id);
 			}
-
-			catch{
+			catch(error){
 				console.log("It was dead when I came. I swear!")
 			}
 		} 
@@ -190,6 +209,7 @@ export class VerticalDragbar extends Dragbar{
 			this.dragbar.style.left = left + "%";
 		}
 
+		
 		// for Safari
 		this.dragbar.style.position = "absolute";
 	}

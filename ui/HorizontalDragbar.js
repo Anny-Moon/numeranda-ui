@@ -59,28 +59,34 @@ export class HorizontalDragbar extends Dragbar{
 	}
 
 	setPosition({top:top, bottom:bottom}){
-		if(top!=null)
-			this.dragbar.style.top = top ;
-		
+		//TODO: safari cannot call getBoundingClientRect() before loading
+		var containerPosition = this.master.container.getBoundingClientRect();
 
-		if(bottom!=null){
-
-			if(bottom.charAt(bottom.length-1)=="%"){
-				this.dragbar.style.top = 100-bottom;
+		if(top!=null){
+			if(top.charAt(top.length-1)=="x")
+				this.dragbar.style.top = top;
+			else if(top.charAt(top.length-1)=="%"){
+				let tmp = top.substring(0, top.length - 1);
+				this.dragbar.style.top = tmp * containerPosition.height / 100.0 + "px";
 			}
-
-			else if(bottom.charAt(bottom.length-1)=="x"){
+		}
+		
+		if(bottom!=null){
+			if(bottom.charAt(bottom.length-1)=="x"){
 				this.bottomPx = bottom.substring(0, bottom.length - 2);
-				let containerPosition = this.master.container.getBoundingClientRect();
-				let top = (containerPosition.height - this.bottomPx)/containerPosition.height * 100
-				this.dragbar.style.top = top + "%";
+				let tmp =(containerPosition.height - this.bottomPx)/containerPosition.height * 100;
+				this.dragbar.style.top = tmp * containerPosition.height / 100.0 + "px";
+			}
+			else if(bottom.charAt(bottom.length-1)=="%"){
+				let tmp = 100 - bottom.substring(0, bottom.length - 1);
+				this.dragbar.style.top = tmp * containerPosition.height / 100.0 + "px";
 			}
 		}
 
-		this.dragbar.style.left = "0%"
+		this.dragbar.style.left = "0px";
 	}
 
-	/*fitToWindowsPx(){
+	fitToWindows(){
 
 		var s = new Set([...this.topWindow, ...this.bottomWindow])
 		var a = Array.from(s);
@@ -101,18 +107,21 @@ export class HorizontalDragbar extends Dragbar{
 
 		this.dragbar.style.left = leftMin + "px";
 
-		if(!Master.getIfSomeAction() && Master.getPositionPx(this.dragbar).width<this.master.MIN_WIDTH){
+		if(this.master.getIfSomeAction() && Master.getPositionPx(this.dragbar).width<this.master.MIN_WIDTH){
 			try{
 				this.master.removeDiv(this.id);
 			}
 
-			catch{
+			catch(error){
 				console.log("It was dead when I came. I swear!")
 			}
-		} 
+		}
 
-	}*/
-
+		this.dragbar.style.top = Master.getPositionPx(this.dragbar).top + "px"; 
+		// for Safari
+		this.dragbar.style.position = "absolute";
+	}
+/*
 	fitToWindows(){
 
 		var s = new Set([...this.topWindow, ...this.bottomWindow])
@@ -140,18 +149,23 @@ export class HorizontalDragbar extends Dragbar{
 				console.log(this.id + " became too thin, so will be deleted.")
 				this.master.removeDiv(this.id);
 			}
-
-			catch{
+			catch(error){
 				console.log("It was dead when I came. I swear!")
 			}
 		}
 
-		// for Safari
-		this.dragbar.style.position = "absolute";
+		
 	}
-
+*/
+	convertToPrecentage(){
+		if(!this.isFixedPx)
+			this.dragbar.style.top = this.master.getPosition(this.dragbar).top + "%";
+		this.dragbar.style.left = this.master.getPosition(this.dragbar).left + "%";
+		this.dragbar.style.width = this.master.getPosition(this.dragbar).width + "%";
+	}
 	fitToWindowsRescale(){
-
+		if(!this.isFixedPx)
+			this.dragbar.style.top = this.master.getPosition(this.dragbar).top + "%";
 		var s = new Set([...this.topWindow, ...this.bottomWindow])
 		var a = Array.from(s);
 
@@ -177,8 +191,7 @@ export class HorizontalDragbar extends Dragbar{
 				console.log(this.id + " became too thin, so will be deleted.")
 				this.master.removeDiv(this.id);
 			}
-
-			catch{
+			catch(error){
 				console.log("It was dead when I came. I swear!")
 			}
 		}

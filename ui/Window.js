@@ -13,8 +13,8 @@ export class Window{
 		this.window = this.master.createDiv(this.id, extraClasses);
 		this.rightNeighbor = [];
 		this.bottomNeighbor = null;
-		const color = Math.floor(Math.random()*16777215).toString(16);
-		this.window.style.background = "#" + color;
+		//const color = Math.floor(Math.random()*16777215).toString(16);
+		//this.window.style.background = "#" + color;
 		this.window.style.width = "100%";
 		this.window.style.height = "100%";
 
@@ -31,7 +31,7 @@ export class Window{
 		this.isSplitAllowed = true;
 
 		this.distructionCallback = null;
-		
+
 	}
 
 	allowSplit(flag){
@@ -121,48 +121,83 @@ export class Window{
 		console.log(this.id + ": I will kill myself")
 	}
 
-	fitTheAreaBetweenDragbars(){
+	fitTheChild(){
 		var top = 0;
 		var left = 0;
-		//var height = Master.getPositionPx(this.master.container).height;
-		//var width = Master.getPositionPx(this.master.container).width;
-
-		var height = this.master.getPosition(this.master.container).height;
-		var width = this.master.getPosition(this.master.container).width;		
+		var height = Master.getPositionPx(this.window).height;
+		var width = Master.getPositionPx(this.window).width;
 		
 		if(this.topDragbar!=null){
-			//top = Master.getPositionPx(this.topDragbar.dragbar).top;
-			top = this.master.getPosition(this.topDragbar.dragbar).top;
+			top = this.master.HORIZONTAL_DRAGBAR_HALF_HEIGHT
 			height = height - top;
 		}
 
 		if(this.bottomDragbar!=null){
-			//height = Master.getPositionPx(this.bottomDragbar.dragbar).top - top;
-			height = this.master.getPosition(this.bottomDragbar.dragbar).top - top;
+			height = height - this.master.HORIZONTAL_DRAGBAR_HALF_HEIGHT;
 		}
 
 		if(this.leftDragbar!=null){
-			//left = Master.getPositionPx(this.leftDragbar.dragbar).left
-			left = this.master.getPosition(this.leftDragbar.dragbar).left
+			left = this.master.VERTICAL_DRAGBAR_HALF_WIDTH;
 			width = width - left;
 		}
 
 		if(this.rightDragbar!=null){
-			width = this.master.getPosition(this.rightDragbar.dragbar).left - left;
-			//width = Master.getPositionPx(this.rightDragbar.dragbar).left - left;
+			width = width - this.master.VERTICAL_DRAGBAR_HALF_WIDTH;
+			//console.log("my name " + this.childWindow.id + " shift: " + shift)
 		}
-		/*
+		
+		this.childWindow.style.position = "absolute";
+		this.childWindow.style.left = left + "px";
+		this.childWindow.style.width = width + "px";
+		this.childWindow.style.top = top + "px";
+		this.childWindow.style.height = height + "px";
+	}
+
+	fitTheAreaBetweenDragbars(){
+		var top = 0;
+		var left = 0;
+		
+		var height = Master.getPositionPx(this.master.container).height;
+		var width = Master.getPositionPx(this.master.container).width;
+
+		//var height = this.master.getPosition(this.master.container).height;
+		//var width = this.master.getPosition(this.master.container).width;
+		
+		if(this.topDragbar!=null){
+			top = Master.getPositionPx(this.topDragbar.dragbar).top;
+			//top = this.master.getPosition(this.topDragbar.dragbar).top;
+			height = height - top;
+		}
+
+		if(this.bottomDragbar!=null){
+			height = Master.getPositionPx(this.bottomDragbar.dragbar).top - top;
+			//height = this.master.getPosition(this.bottomDragbar.dragbar).top - top;
+		}
+
+		if(this.leftDragbar!=null){
+			left = Master.getPositionPx(this.leftDragbar.dragbar).left
+			//left = this.master.getPosition(this.leftDragbar.dragbar).left
+			width = width - left;
+		}
+
+		if(this.rightDragbar!=null){
+			//width = this.master.getPosition(this.rightDragbar.dragbar).left - left;
+			width = Master.getPositionPx(this.rightDragbar.dragbar).left - left;
+		}
+		
 		this.window.style.left = left + "px";
 		this.window.style.width = width + "px";
 		this.window.style.top = top + "px";
 		this.window.style.height = height + "px";
-		*/
-
+		
+/*
 		this.window.style.left = left + "%";
 		this.window.style.width = width + "%";
 		this.window.style.top = top + "%";
 		this.window.style.height = height + "%";
-
+*/
+		this.fitTheChild();
+		
 		if(Master.getPositionPx(this.window).height < 50 || Master.getPositionPx(this.window).width < 50)
 			this.button.show(false);
 
@@ -198,22 +233,29 @@ export class Window{
 			}
 			this.window.style.top = top + "%";
 			height = height - top;
+			
+			//this.childWindow.style.top = this.master.HORIZONTAL_DRAGBAR_HALF_HEIGHT + "px";
 		}
 
 		if(this.bottomDragbar!=null){
 			//height = Master.getPositionPx(this.bottomDragbar.dragbar).top - top;
 			height = this.master.getPosition(this.bottomDragbar.dragbar).top - top;
+			//var shift = Master.getPositionPx(this.childWindow).top + this.master.HORIZONTAL_DRAGBAR_HALF_HEIGHT;
+			//this.childWindow.style.height = "calc(100% - " + shift + "px)";
 		}
 
 		if(this.leftDragbar!=null){
 			//left = Master.getPositionPx(this.leftDragbar.dragbar).left
 			left = this.master.getPosition(this.leftDragbar.dragbar).left
 			width = width - left;
+			//this.childWindow.style.left = this.master.VERTICAL_DRAGBAR_HALF_WIDTH + "px";
 		}
 
 		if(this.rightDragbar!=null){
 			width = this.master.getPosition(this.rightDragbar.dragbar).left - left;
 			//width = Master.getPositionPx(this.rightDragbar.dragbar).left - left;
+			//var shift = Master.getPositionPx(this.childWindow).left + this.master.VERTICAL_DRAGBAR_HALF_WIDTH;
+			//this.childWindow.style.width = "calc(100% - " + shift + "px)";
 		}
 		/*
 		this.window.style.left = left + "px";
@@ -242,19 +284,23 @@ export class Window{
 	resize(){
 		this.fitTheAreaBetweenDragbars();
 		if(this.bottomDragbar!=null){
-			this.bottomDragbar.fitToWindows()
+			this.bottomDragbar.fitToWindows();
+			this.bottomDragbar.convertToPrecentage();
 		}
 
 		if(this.topDragbar!=null){
-			this.topDragbar.fitToWindows()
+			this.topDragbar.fitToWindows();
+			this.topDragbar.convertToPrecentage();
 		}
 
 		if(this.leftDragbar!=null){
-			this.leftDragbar.fitToWindows()
+			this.leftDragbar.fitToWindows();
+			this.leftDragbar.convertToPrecentage();
 		}
 
 		if(this.rightDragbar!=null){
-			this.rightDragbar.fitToWindows()
+			this.rightDragbar.fitToWindows();
+			this.rightDragbar.convertToPrecentage();
 		}
 
 	}
@@ -301,10 +347,9 @@ export class Window{
 	createChildWindow(id){
 		var div = document.createElement("div");
 		div.id = id;
-		
+		//div.style.margin = "3px";
 		//console.log("The new " + id + " was created!")
 		return this.window.appendChild(div);
-		
 	}
 
 	showButton(flag){
