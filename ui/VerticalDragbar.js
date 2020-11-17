@@ -84,7 +84,6 @@ export class VerticalDragbar extends Dragbar{
 		}
 
 		this.dragbar.style.top = "0px";
-		//this.convertToPrecentage();
 	}
 
 	fitToWindows(){
@@ -98,8 +97,6 @@ export class VerticalDragbar extends Dragbar{
   				bottomMax = Master.getPositionPx(a[i].window).bottom;
 		};
 		
-		this.dragbar.style.height = (bottomMax - Master.getPositionPx(this.dragbar).top) + "px";
-
 		var topMin = Master.getPositionPx(a[0].window).top;
 		for (var i=1; i<a.length; i++){
   			if(topMin > Master.getPositionPx(a[i].window).top)
@@ -107,6 +104,7 @@ export class VerticalDragbar extends Dragbar{
 		};
 
 		this.dragbar.style.top = topMin + "px";
+		this.dragbar.style.height = (bottomMax - Master.getPositionPx(this.dragbar).top) + "px";
 
 		if(!this.master.getIfSomeAction() && Master.getPositionPx(this.dragbar).height<this.master.MIN_HEIGHT){
 			try{
@@ -354,8 +352,8 @@ export class VerticalDragbar extends Dragbar{
 
 	splitLeftWindow(wnd){
 		var newDragbar = this.master.createDragbar({type:"vertical"});
-		const position = this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left;
-		newDragbar.setPosition({"left":position + "%"});
+		const position = Master.getPositionPx(wnd.window).width/2 + Master.getPositionPx(wnd.window).left;
+		newDragbar.setPosition({"left":position + "px"});
 		
 		this.removeLeftWindow(wnd);
 
@@ -377,8 +375,8 @@ export class VerticalDragbar extends Dragbar{
 
 	splitRightWindow(wnd){
 		var newDragbar = this.master.createDragbar({type:"vertical"});
-		const position = this.master.getPosition(wnd.window).width/2 + this.master.getPosition(wnd.window).left;
-		newDragbar.setPosition({"left":position + "%"});
+		const position = Master.getPositionPx(wnd.window).width/2 + Master.getPositionPx(wnd.window).left;
+		newDragbar.setPosition({"left":position + "px"});
 		
 		this.removeRightWindow(wnd);
 
